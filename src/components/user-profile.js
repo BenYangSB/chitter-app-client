@@ -13,7 +13,7 @@ export default class Trending extends Component {
 
 
   componentDidMount = () => {
-    axios.get('http://localhost:5000/users/' + this.props.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
       .then(response => {
         if (response.data.length > 0) {
           this.setState({

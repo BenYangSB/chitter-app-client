@@ -16,7 +16,7 @@ export default class Trending extends Component {
     let channels = ["lisa Ngyuen" , "gordon ramsay", "mikey chen"];
 
     channels.map((channel) => {
-        axios.get('http://localhost:5000/users/trending', {
+        axios.get('https://chitterr-app-api.herokuapp.com/users/trending', {
             headers: {
                 'name' : channel,
             }

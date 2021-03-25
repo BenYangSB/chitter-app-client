@@ -22,6 +22,7 @@ export default class CreateUser extends Component {
       return;
 
     // console.log(this.state.currentUser);
+    console.log("HWEHFHDSGFSDJFGSDGFWDFJG")
     let temp = (this.state.currentUser.following);
     // console.log(temp);
     if(!temp.includes(input.userKey)){
@@ -35,7 +36,7 @@ export default class CreateUser extends Component {
           followers: this.state.currentUser.followers,
         }
 
-        axios.post('http://localhost:5000/users/update/' + this.state.currentUser._id, userUpdatedFollow)
+        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
         .then(res => console.log(res.data));
 
         const userUpdatedFollowers = {
@@ -44,7 +45,7 @@ export default class CreateUser extends Component {
           following: input.following,
           followers: input.followers+1,
         }
-        axios.post('http://localhost:5000/users/update/' + input._id, userUpdatedFollowers)
+        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => console.log(res.data));
     }
 
@@ -70,7 +71,7 @@ export default class CreateUser extends Component {
           followers: this.state.currentUser.followers,
         }
 
-        axios.post('http://localhost:5000/users/update/' + this.state.currentUser._id, userUpdatedFollow)
+        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
         .then(res => console.log(res.data));
 
         const userUpdatedFollowers = {
@@ -79,7 +80,7 @@ export default class CreateUser extends Component {
           following: input.following,
           followers: input.followers-1,
         }
-        axios.post('http://localhost:5000/users/update/' + input._id, userUpdatedFollowers)
+        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => console.log(res.data));
     }
 
@@ -87,7 +88,7 @@ export default class CreateUser extends Component {
   }
 
   readUsers = () => {
-    axios.get('http://localhost:5000/users/')
+    axios.get('https://chitterr-app-api.herokuapp.com/users/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -104,7 +105,7 @@ export default class CreateUser extends Component {
 
   componentDidMount() {
     this.readUsers();
-    axios.get('http://chitterr-app.herokuapp.com/user/discover')
+    axios.get('https://chitterr-app-api.herokuapp.com/user/discover')
       .then(response => {
         if (response.data != null && response.data.length > 0) {
           this.setState({
@@ -133,7 +134,7 @@ export default class CreateUser extends Component {
 
     console.log(user);
 
-    axios.post('http://localhost:5000/users/add', user)
+    axios.post('https://chitterr-app-api.herokuapp.com/users/add', user)
       .then(res => console.log(res.data));
 
     this.setState({
@@ -160,9 +161,7 @@ export default class CreateUser extends Component {
                           UnFollow!
                           </button>   
                       }
-
-
-            
+          
                   </div>;
                 })
               }

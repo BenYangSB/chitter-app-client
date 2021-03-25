@@ -48,12 +48,12 @@ class App extends React.Component {
         followers: 0
       }
     
-      axios.post('http://localhost:5000/users/add', userAdd)
+      axios.post('https://chitterr-app-api.herokuapp.com/add', userAdd)
         .then(res => console.log(res.data));
       
 
       //get this user back
-      axios.get('http://localhost:5000/users/' + userAdd.userKey)
+      axios.get('https://chitterr-app-api.herokuapp.com/users/' + userAdd.userKey)
       .then(response => {
         if (response.data != null && response.data.length > 0) {
           this.setState({

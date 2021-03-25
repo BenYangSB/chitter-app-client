@@ -73,7 +73,7 @@ export default class ExercisesList extends Component {
 
 
     following.forEach(element => {
-        axios.get('http://localhost:5000/exercises/feed/' + element)
+        axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + element)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
@@ -104,7 +104,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('http://localhost:5000/exercises/'+id)
+    axios.delete('https://chitterr-app-api.herokuapp.com/exercises/'+id)
       .then(response => { console.log(response.data)});
 
     this.setState({
