@@ -17,7 +17,7 @@ const Exercise = props => {
 
             <p>{props.exercise.date.substring(0, 10)}</p>
             {
-                props.exercise.userKey == props.currentKey || (props.currUser != null && props.currUser!= undefined && props.exercise.userKey == props.currUser.userKey )  &&
+                ((props.exercise.userKey == props.currentKey) || (props.currUser != null && props.currUser!= undefined && props.exercise.userKey == props.currUser.userKey ))  &&
                 <p>
                     <Link to={"/edit/" + props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
                 </p>
