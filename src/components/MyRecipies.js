@@ -17,7 +17,7 @@ class MyRecipies extends Component {
             axios.get('https://chitterr-app-api.herokuapp.com/exercises/myRecipes/' + this.props.userKey)
                 .then(response => {
                     let newExercises = this.state.exercises;
-                    
+
                     response.data.forEach(exercise => {
                         newExercises.push(exercise);
                     });
@@ -28,7 +28,7 @@ class MyRecipies extends Component {
                     console.log(error)
                 })
         }
-    }
+    };
 
     ingList = (ingredients) => {
         if (ingredients == undefined)
@@ -37,7 +37,7 @@ class MyRecipies extends Component {
         ingredients.map(ing => {
             return <li>{ing}</li>
         })
-    }
+    };
 
     deleteExercise = (id) => {
         axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
@@ -46,16 +46,17 @@ class MyRecipies extends Component {
         this.setState({
             exercises: this.state.exercises.filter(el => el._id !== id)
         })
-    }
+    };
+
     exerciseList = () => {
         return this.state.exercises.map(currentexercise => {
-            if (currentexercise == undefined)
-                return;
+            if (currentexercise == undefined || currentexercise == undefined)
+                return null;
             console.log("HERE");
             console.log(currentexercise)
-            return <Exercise ingList={this.ingList()} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+            return <Exercise ingList={this.ingList()} currentKey={this.props.userKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
         })
-    }
+    };
 
 
     render() {
@@ -68,6 +69,6 @@ class MyRecipies extends Component {
             </div>
         )
     }
-}
+};
 
 export default MyRecipies;

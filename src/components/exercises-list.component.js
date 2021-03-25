@@ -93,7 +93,7 @@ export default class ExercisesList extends Component {
 
   }
 
-  ingList(ingredients){
+  ingList(ingredients) {
     if(ingredients == undefined)
       return;
 
@@ -114,7 +114,7 @@ export default class ExercisesList extends Component {
   exerciseList() {
     return this.state.exercises.map(currentexercise => {
       if(currentexercise == undefined)
-        return;
+        return null;
       return <Exercise ingList = {this.ingList()} currentKey = {this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
     })
   }

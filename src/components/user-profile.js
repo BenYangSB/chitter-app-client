@@ -55,6 +55,6 @@ export default class Trending extends Component {
 
         }
       </div>
-    )
+    );
   }
 }

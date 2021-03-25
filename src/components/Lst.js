@@ -8,17 +8,18 @@ class Lst extends Component {
     }
 
     render() {
-        return <div>
+        return (
+            <div>
 
-            <h>Ingredients</h>
-            {
-                this.props.ingList.map(ing => {
-                    return <li>{ing}</li>
-                })
-            }
-        </div>
-
+                <h>Ingredients</h>
+                {
+                    this.props.ingList.map(ing => {
+                        return <li>{ing}</li>
+                    })
+                }
+            </div>
+        );
     }
-}
+};
 
 export default Lst;
