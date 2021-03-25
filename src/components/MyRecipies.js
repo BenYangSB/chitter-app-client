@@ -58,9 +58,7 @@ class MyRecipies extends Component {
         return this.state.exercises.map(currentexercise => {
             if (currentexercise == undefined || currentexercise == undefined)
                 return null;
-            console.log("HERE");
-            console.log(currentexercise)
-            return <Exercise ingList={this.ingList()} currentKey={this.props.userKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+            return <Exercise currUser = {this.props.currUser} ingList={this.ingList()} currentKey={this.props.userKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
         })
     };
 
