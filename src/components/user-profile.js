@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import LogIn from '../components/LogIn'
 
 export default class Trending extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        user: null,
+      user: null,
     }
 
   }
@@ -34,23 +35,25 @@ export default class Trending extends Component {
   }
   render() {
     return (
-      <div class= "trendingvids">
+      <div class="trendingvids">
 
 
-          {this.state.user != null && 
+        {this.state.user != null &&
 
-          
-          <div class = "card" id =  "createRecipe">
-              <p>{"HELLO  " + this.state.user[0].username}</p>
-              <div>
-                  <p>Followers: {this.state.user[0].followers}</p>
-              </div>
-              <div>
-                    Following:   {this.state.user[0].following.length}
-              </div>
+
+          <div class="card" id="createRecipe">
+            <p>{"HELLO  " + this.state.user[0].username}</p>
+            <div>
+              <p>Followers: {this.state.user[0].followers}</p>
+            </div>
+            <div>
+              Following:   {this.state.user[0].following.length}
+            </div>
+
+            <LogIn signOut={this.props.signOut} displayName={this.props.displayName} profilePic={this.props.profilePic} />
           </div>
-          
-          }
+
+        }
       </div>
     )
   }

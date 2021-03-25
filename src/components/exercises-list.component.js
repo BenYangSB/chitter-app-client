@@ -1,49 +1,50 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Exercise from '../components/exercise';
 import axios from 'axios';
 
-class Lst extends Component {
+// class Lst extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+//   constructor(props) {
+//     super(props);
+//   }
 
-  render() {
-    return <div>
+//   render() {
+//     return <div>
 
-      <h>Ingredients</h>
-      {
-      this.props.ingList.map(ing=>{
-        return <li>{ing}</li>
-      })
-      }
-    </div>
+//       <h>Ingredients</h>
+//       {
+//       this.props.ingList.map(ing=>{
+//         return <li>{ing}</li>
+//       })
+//       }
+//     </div>
 
-  }
-}
-const Exercise = props => (
+//   }
+// }
+// const Exercise = props => (
 
-  <div class = "card" id = "recipe">
+//   <div class = "card" id = "recipe">
 
 
-      <h>{props.exercise.username}</h>
-      <p>Dish : {props.exercise.description}</p>
-      <p>Time to make : {props.exercise.duration} minutes</p>
+//       <h>{props.exercise.username}</h>
+//       <p>Dish : {props.exercise.description}</p>
+//       <p>Time to make : {props.exercise.duration} minutes</p>
 
-      <Lst ingList = {props.exercise.ingredients}></Lst>
+//       <Lst ingList = {props.exercise.ingredients}></Lst>
 
-      <br></br>      
-      <p>{props.exercise.date.substring(0,10)}</p>
-      { 
-        props.exercise.userKey == props.currentKey && 
-        <p>
-        <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-        </p>
-      }
+//       <br></br>      
+//       <p>{props.exercise.date.substring(0,10)}</p>
+//       { 
+//         props.exercise.userKey == props.currentKey && 
+//         <p>
+//         <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+//         </p>
+//       }
 
-  </div>
+//   </div>
 
-)
+// )
 
 
 export default class ExercisesList extends Component {
@@ -72,23 +73,23 @@ export default class ExercisesList extends Component {
     // console.log(following)
 
 
-    following.forEach(element => {
-        axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + element)
+    following.forEach(followingUserKey => {
+        axios.get('http://localhost:5000/exercises/feed/' + followingUserKey)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
 
           response.data.forEach(element => {
+            console.log(element);
               temp.push(element);
           });
+          console.log("temp: "+ temp[0]);
           this.setState({ exercises: temp })
         })
         .catch((error) => {
           console.log(error);
         })
     });
-
-
 
   }
 
