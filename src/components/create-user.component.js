@@ -18,7 +18,6 @@ export default class CreateUser extends Component {
 
   onFollow = (input) => {
 
-    console.log("HWEHFHDSGFSDJFGSDGFWDFJG")
 
     if (input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;

@@ -204,13 +204,15 @@ button:hover {
 
 
 .trendingvids{
-
+  margin-top: 2%;
   justify-content: center;
   background-color: rgb(224, 224, 224);
   height: 100%;
   margin:auto;
 }
 #trendingbody{
+  margin-top: 2%;
+
   background-color: rgb(224, 224, 224);
   text-align: center;
   justify-content: center;
@@ -249,6 +251,7 @@ button:hover {
 }
 
 .followBar {
+  margin-top: 2%;
   padding: 1%;
   display : grid;
   grid-template-columns: 30vw 20vw 30vw;
