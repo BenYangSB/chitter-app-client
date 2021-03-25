@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import LogIn from '../components/LogIn'
-
+import MyRecipies from '../components/MyRecipies'
 export default class Trending extends Component {
   constructor(props) {
     super(props);
@@ -41,14 +41,15 @@ export default class Trending extends Component {
         {this.state.user != null &&
 
 
-          <div class="card" id="createRecipe">
-            <p>{"HELLO  " + this.state.user[0].username}</p>
+          <div id="userProf">
+            <p>{"Hello  " + this.state.user[0].username + " !"}</p>
             <div>
               <p>Followers: {this.state.user[0].followers}</p>
             </div>
             <div>
               Following:   {this.state.user[0].following.length}
             </div>
+            <MyRecipies currUser = {this.state.user[0]}></MyRecipies>
 
             <LogIn signOut={this.props.signOut} displayName={this.props.displayName} profilePic={this.props.profilePic} />
           </div>

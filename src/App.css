@@ -15,6 +15,12 @@
   }
 } */
 
+#userProf{
+  text-align: center;
+  font-size: 30px;
+  flex-wrap: wrap;
+}
+
 :root {
   --btn-background-color: rgb(71, 219, 187);
 }
