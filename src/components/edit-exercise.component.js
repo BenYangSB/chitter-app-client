@@ -95,9 +95,9 @@ export default class EditExercise extends Component {
       ingredients: temp
     }
 
-    console.log(exercise);
+    console.log(this.props.match.params.id);
 
-    axios.post('https://chitterr-app-api.herokuapp.com/update/' + this.props.match.params.id, exercise)
+    axios.post('https://chitterr-app-api.herokuapp.com/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data));
 
   }

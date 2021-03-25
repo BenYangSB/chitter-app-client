@@ -96,8 +96,6 @@ export default class ExercisesList extends Component {
     if(ingredients == undefined)
       return;
 
-    console.log("HERE");
-    console.log(ingredients);
     ingredients.map(ing => {
       return <li>{ing}</li>
     })
@@ -105,7 +103,7 @@ export default class ExercisesList extends Component {
 
   deleteExercise(id) {
     axios.delete('https://chitterr-app-api.herokuapp.com/exercises/'+id)
-      .then(response => { console.log(response.data)});
+      .then(response => {});
 
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -116,8 +114,6 @@ export default class ExercisesList extends Component {
     return this.state.exercises.map(currentexercise => {
       if(currentexercise == undefined)
         return;
-      console.log("HERE");
-      console.log(currentexercise )
       return <Exercise ingList = {this.ingList()} currentKey = {this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
     })
   }

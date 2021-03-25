@@ -18,11 +18,11 @@ export default class CreateUser extends Component {
 
   onFollow = (input) =>{
 
+    console.log("HWEHFHDSGFSDJFGSDGFWDFJG")
+
     if(input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;
 
-    // console.log(this.state.currentUser);
-    console.log("HWEHFHDSGFSDJFGSDGFWDFJG")
     let temp = (this.state.currentUser.following);
     // console.log(temp);
     if(!temp.includes(input.userKey)){
@@ -52,6 +52,8 @@ export default class CreateUser extends Component {
     this.readUsers();
   }
   onUnFollow = (input) =>{
+
+    console.log(this.state.currentUser)
 
     if(input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;
@@ -105,7 +107,8 @@ export default class CreateUser extends Component {
 
   componentDidMount() {
     this.readUsers();
-    axios.get('https://chitterr-app-api.herokuapp.com/user/discover')
+    console.log(this.props.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
       .then(response => {
         if (response.data != null && response.data.length > 0) {
           this.setState({
