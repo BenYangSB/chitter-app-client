@@ -16,6 +16,10 @@ import axios from 'axios';
 import CreateUser from "./components/create-user.component";
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import Img1 from "./assets/img1.jpeg"
+import Img2 from "./assets/img2.jpeg"
+import Img3 from "./assets/img3.jpeg"
+import Img4 from "./assets/img4.jpeg"
 
 class App extends React.Component {
   state = {
@@ -98,7 +102,11 @@ class App extends React.Component {
           </div>
           }
         {
-          <div class="login">
+          <div class= { this.state.isSignedIn ? "loggedIn" :  "login"}
+          style={{ 
+            // backgroundImage: `url(${Img3})`,
+            // backgroundRepeat: `url(${Img2})`,
+          }}>
               {this.state.isSignedIn ? (
                 <span class = "complete"id = "loginout">
                   <div>Signed In!</div>
@@ -110,10 +118,16 @@ class App extends React.Component {
                   />
                 </span>
                 ) : (
-                <StyledFirebaseAuth
-                  uiConfig={this.uiConfig}
-                  firebaseAuth={firebase.auth()}
-                />
+
+                  <div class = "loginpage" >
+                    Welcome to Chitter!
+                    <StyledFirebaseAuth class = "loginpage"
+                      uiConfig={this.uiConfig}
+                      firebaseAuth={firebase.auth()}
+                    />
+                 
+                  </div>
+
               )}
           </div>
         }
