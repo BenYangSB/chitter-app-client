@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/chitter-app-client/static/css/main.d6490035.chunk.css",
+    "main.js": "/chitter-app-client/static/js/main.afc472cc.chunk.js",
+    "main.js.map": "/chitter-app-client/static/js/main.afc472cc.chunk.js.map",
+    "runtime-main.js": "/chitter-app-client/static/js/runtime-main.df518041.js",
+    "runtime-main.js.map": "/chitter-app-client/static/js/runtime-main.df518041.js.map",
+    "static/css/2.01ca705e.chunk.css": "/chitter-app-client/static/css/2.01ca705e.chunk.css",
+    "static/js/2.d0e32751.chunk.js": "/chitter-app-client/static/js/2.d0e32751.chunk.js",
+    "static/js/2.d0e32751.chunk.js.map": "/chitter-app-client/static/js/2.d0e32751.chunk.js.map",
+    "static/js/3.31da034a.chunk.js": "/chitter-app-client/static/js/3.31da034a.chunk.js",
+    "static/js/3.31da034a.chunk.js.map": "/chitter-app-client/static/js/3.31da034a.chunk.js.map",
+    "index.html": "/chitter-app-client/index.html",
+    "static/css/2.01ca705e.chunk.css.map": "/chitter-app-client/static/css/2.01ca705e.chunk.css.map",
+    "static/css/main.d6490035.chunk.css.map": "/chitter-app-client/static/css/main.d6490035.chunk.css.map",
+    "static/js/2.d0e32751.chunk.js.LICENSE.txt": "/chitter-app-client/static/js/2.d0e32751.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.df518041.js",
+    "static/css/2.01ca705e.chunk.css",
+    "static/js/2.d0e32751.chunk.js",
+    "static/css/main.d6490035.chunk.css",
+    "static/js/main.afc472cc.chunk.js"
+  ]
+}
