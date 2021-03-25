@@ -121,10 +121,10 @@ export default class ExercisesList extends Component {
 
   render() {
     return (
-      <div class = "absFeed">
-        <div class = "feed-title">Feed</div>
+      <div className = "absFeed">
+        <div className = "feed-title">Feed</div>
 
-        <div class = "feed-total">
+        <div className = "feed-total">
             {/* {console.log(this.props.currUser.following)} */}
             { this.exerciseList() }
         </div>

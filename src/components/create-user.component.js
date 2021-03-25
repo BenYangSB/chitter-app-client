@@ -16,73 +16,73 @@ export default class CreateUser extends Component {
   }
 
 
-  onFollow = (input) =>{
+  onFollow = (input) => {
 
     console.log("HWEHFHDSGFSDJFGSDGFWDFJG")
 
-    if(input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
+    if (input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;
 
     let temp = (this.state.currentUser.following);
     // console.log(temp);
-    if(!temp.includes(input.userKey)){
-        temp.push(input.userKey)
+    if (!temp.includes(input.userKey)) {
+      temp.push(input.userKey)
 
-        console.log(temp);
-        const userUpdatedFollow = {
-          username: this.state.currentUser.username,
-          userKey: this.state.currentUser.userKey,
-          following: temp,
-          followers: this.state.currentUser.followers,
-        }
+      console.log(temp);
+      const userUpdatedFollow = {
+        username: this.state.currentUser.username,
+        userKey: this.state.currentUser.userKey,
+        following: temp,
+        followers: this.state.currentUser.followers,
+      }
 
-        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
+      axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
         .then(res => console.log(res.data));
 
-        const userUpdatedFollowers = {
-          username: input.username,
-          userKey: input.userKey,
-          following: input.following,
-          followers: input.followers+1,
-        }
-        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
+      const userUpdatedFollowers = {
+        username: input.username,
+        userKey: input.userKey,
+        following: input.following,
+        followers: input.followers + 1,
+      }
+      axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => console.log(res.data));
     }
 
     this.readUsers();
   }
-  onUnFollow = (input) =>{
+  onUnFollow = (input) => {
 
     console.log(this.state.currentUser)
 
-    if(input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
+    if (input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;
 
     // console.log(this.state.currentUser);
     let temp = (this.state.currentUser.following);
     // console.log(temp);
     let index = temp.indexOf(input.userKey);
-    if(index > -1){
-        temp.splice(index,1)
+    if (index > -1) {
+      temp.splice(index, 1)
 
-        console.log(temp);
-        const userUpdatedFollow = {
-          username: this.state.currentUser.username,
-          userKey: this.state.currentUser.userKey,
-          following: temp,
-          followers: this.state.currentUser.followers,
-        }
+      console.log(temp);
+      const userUpdatedFollow = {
+        username: this.state.currentUser.username,
+        userKey: this.state.currentUser.userKey,
+        following: temp,
+        followers: this.state.currentUser.followers,
+      }
 
-        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
+      axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
         .then(res => console.log(res.data));
 
-        const userUpdatedFollowers = {
-          username: input.username,
-          userKey: input.userKey,
-          following: input.following,
-          followers: input.followers-1,
-        }
-        axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
+      const userUpdatedFollowers = {
+        username: input.username,
+        userKey: input.userKey,
+        following: input.following,
+        followers: input.followers - 1,
+      }
+      axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => console.log(res.data));
     }
 
@@ -94,7 +94,7 @@ export default class CreateUser extends Component {
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
-            users: response.data.map(user => user ),
+            users: response.data.map(user => user),
           })
         }
       })
@@ -102,7 +102,7 @@ export default class CreateUser extends Component {
         console.log(error);
       })
 
-      console.log(this.state.currentUser);
+    console.log(this.state.currentUser);
   }
 
   componentDidMount() {
@@ -120,7 +120,7 @@ export default class CreateUser extends Component {
         console.log(error);
       })
 
-      console.log(this.state.currentUser);
+    console.log(this.state.currentUser);
   }
   onChangeUsername(e) {
     this.setState({
@@ -147,27 +147,33 @@ export default class CreateUser extends Component {
 
   render() {
     return (
-      <div class = "absFeed">
-              {
-                this.state.users.map((user)=> {
-                  return <div class= "follow"> 
-                      {console.log(user.username)}
+      <div class="absFeed">
+        <div className="followBar">
+          <div className="user">Username</div>
+          <div className="followers">Followers</div>
+          <div id="followStatus">Follow Status</div>
+        </div>
+        {
+          this.state.users.map((user) => {
+            return <div class="follow">
+              {console.log(user.username)}
 
-                      {user.username + " -> " + user.followers}
-                      {   this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
-                        
-                          <button id = "followBtn" onClick = {()=> this.onFollow(user)}>
-                          Follow!
-                          </button>   
-                          :
-                          <button id = "followBtn" onClick = {()=> this.onUnFollow(user)}>
-                          UnFollow!
-                          </button>   
-                      }
-          
-                  </div>;
-                })
+              <div className="user">{user.username}</div>
+              <div className="followers">{user.followers}</div>
+              {this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
+
+                <button id="followBtn" onClick={() => this.onFollow(user)}>
+                  Follow!
+                          </button>
+                :
+                <button id="followBtn" onClick={() => this.onUnFollow(user)}>
+                  UnFollow!
+                          </button>
               }
+
+            </div>;
+          })
+        }
       </div>
     )
   }
