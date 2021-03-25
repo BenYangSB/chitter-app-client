@@ -62,6 +62,10 @@ class MyRecipies extends Component {
     render() {
         return (
             <div className="absFeed">
+
+                <div>
+                    HELLO
+                </div>
                 <div className="feed-title">My Recipes</div>
                 <div className="feed-total">
                     {this.exerciseList()}
