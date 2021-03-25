@@ -13,10 +13,15 @@ class MyRecipies extends Component {
     }
 
     componentDidMount = () => {
-        if (this.props.userKey != null || this.props.userKey != undefined) {
-            axios.get('https://chitterr-app-api.herokuapp.com/exercises/myRecipes/' + this.props.userKey)
+        console.log("WE ARE HERE")
+        if (this.props.currUser != null || this.props.currUser != undefined) {
+
+            // axios.get('https://chitterr-app-api.herokuapp.com/exercises/myRecipes/' + this.props.userKey)
+
+            axios.get('http://localhost:5000/exercises/myRecipes/' + this.props.currUser.userKey)
                 .then(response => {
                     let newExercises = this.state.exercises;
+                    console.log(response);
 
                     response.data.forEach(exercise => {
                         newExercises.push(exercise);
@@ -62,10 +67,6 @@ class MyRecipies extends Component {
     render() {
         return (
             <div className="absFeed">
-
-                <div>
-                    HELLO
-                </div>
                 <div className="feed-title">My Recipes</div>
                 <div className="feed-total">
                     {this.exerciseList()}
