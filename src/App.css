@@ -120,7 +120,7 @@ html {
   flex-wrap: wrap;
 }
 .absFeed{
-  width: 80vw;
+  width: 70vw;
   display: flex;
   margin: auto;
   flex-direction: column;
