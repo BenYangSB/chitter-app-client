@@ -21,6 +21,14 @@
   flex-wrap: wrap;
 }
 
+.login{
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+
+}
+
 :root {
   --btn-background-color: rgb(71, 219, 187);
 }

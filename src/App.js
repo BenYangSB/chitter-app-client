@@ -10,10 +10,9 @@ import EditExercise from "./components/edit-exercise.component";
 import Trending from "./components/trending";
 import UserProfile from "./components/user-profile";
 import MyRecipies from "./components/MyRecipies";
-
+import LogIn from './components/LogIn'
 import CreateExercise from "./components/create-exercise.component";
 import axios from 'axios';
-
 import CreateUser from "./components/create-user.component";
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
@@ -92,21 +91,33 @@ class App extends React.Component {
 
             {/* </div> */}
 
+
             <div className="logIn">
             </div>
 
           </div>
           }
-            {
-            <div className="App">
-              {!this.state.isSignedIn &&
+        {
+          <div class="login">
+              {this.state.isSignedIn ? (
+                <span class = "complete"id = "loginout">
+                  <div>Signed In!</div>
+                  <button onClick={() => firebase.auth().signOut()}>Sign out!</button>
+                  <h1 id = "welcome">Welcome {firebase.auth().currentUser.displayName}</h1>
+                  <img id = "pfp"
+                    alt="profile picture"
+                    src={firebase.auth().currentUser.photoURL}
+                  />
+                </span>
+                ) : (
                 <StyledFirebaseAuth
                   uiConfig={this.uiConfig}
                   firebaseAuth={firebase.auth()}
                 />
-              }
-            </div>
-            }
+              )}
+          </div>
+        }
+
 
 
          </div>
