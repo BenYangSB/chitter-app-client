@@ -44,10 +44,7 @@
   color: rgb(255, 255, 255);
   text-align: center;
   font-size: 30px;
-  flex-direction: row;
-  justify-content: center;
   display: inline-block;
-  flex-wrap: wrap;
   margin-top: 10vh;
 }
 
@@ -188,8 +185,14 @@ button:hover {
 .everything{
   /* background-color: rgb(209, 202, 202);
   height: 100%; */
+  font-size: 20px;
 }
 
+.title{
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
 #recipe{
     border-radius: 10px;
     box-shadow: 5px 5px rgb(123, 187, 192);
@@ -200,6 +203,10 @@ button:hover {
     margin-bottom: 2vh;
     /* min-width: 20%; */
     width: 20rem;
+}
+
+.example{
+  margin-top: 50vh;
 }
 
 
@@ -219,7 +226,25 @@ button:hover {
   margin-bottom: 10%;
 }
 
+.greeting{
+  font-size: 80px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.landingImage{
+  display: inline-block;
+  background: url(assets/img2.jpeg), url(assets/img1.jpeg);
+  height: 60vh;
+  background-size: cover;
+  display: table;
+  width: 100vw;
+  text-align: center;
+
+}
 #navBAR{
+  background-color: black;
+  color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -237,6 +262,23 @@ button:hover {
   /* padding: 0; */
   /* width : 10vw; */
   background-color: var(--btn-background-color);
+  background-color: transparent;
+  /* margin-top: 43%; */
+  bottom: 10px;
+  left: 5px;
+}
+
+.sobtn{
+  background-color: black;
+  color: white;
+}
+
+.loginout2{
+  position: fixed;
+  z-index : 1;
+  font-size : 3rem;
+  /* padding: 0; */
+  /* width : 10vw; */
   background-color: transparent;
   /* margin-top: 43%; */
   bottom: 10px;
