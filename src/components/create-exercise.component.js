@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import ImageUploader from 'react-images-upload';
+import IMGS from './PostPicture'
 
 export default class CreateExercise extends Component {
   constructor(props) {
@@ -12,16 +14,25 @@ export default class CreateExercise extends Component {
     this.onChangeDuration = this.onChangeDuration.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.setImages = this.setImages.bind(this);
 
     this.state = {
       ingredients: '',
       description: '',
       duration: 0,
       date: new Date(),
-      users: []
+      users: [],
+      pictures: [] 
     }
+    this.onDrop = this.onDrop.bind(this);
+
   }
 
+  setImages(input) {
+    this.setState({
+      pictures: input
+    })
+  }
   componentDidMount() {
     axios.get('https://chitterr-app-api.herokuapp.com/users/')
       .then(response => {
@@ -85,6 +96,11 @@ export default class CreateExercise extends Component {
           duration: 0
       })
   }
+  onDrop(picture) {
+    this.setState({
+        pictures: this.state.pictures.concat(picture),
+    });
+}
 
   render() {
     return (
@@ -121,6 +137,14 @@ export default class CreateExercise extends Component {
               onChange={this.onChangeDuration}
               />
         </div>
+
+        <IMGS
+          setImages = {() => this.setImages}
+        />
+        {
+          console.log(this.state.pictures)
+        }
+
         <div className="form-group">
           <label>Date: </label>
           <div>
@@ -132,7 +156,7 @@ export default class CreateExercise extends Component {
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log"  id="submitBtn" />
+          <input type="submit" value="Post my recipe!"  id="submitBtn" />
         </div>
       </form>
     </div>

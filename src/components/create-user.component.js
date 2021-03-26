@@ -150,7 +150,7 @@ export default class CreateUser extends Component {
         <div className="followBar">
           <div className="user">Username</div>
           <div className="followers">Followers</div>
-          <div id="followStatus">Follow Status</div>
+          {/* <div id="followStatus">Follow Status</div> */}
         </div>
         {
           this.state.users.map((user) => {

@@ -16,6 +16,8 @@
 } */
 
 #userProf{
+  color: white;
+  background: url(assets/img1.jpeg);
   text-align: center;
   font-size: 30px;
   flex-wrap: wrap;
@@ -106,6 +108,7 @@ html {
 }
 
 .feed-title{
+  color: white;
   margin-top: 2%;
   font-size: 2.5rem;
   font-weight: 600;
@@ -161,6 +164,14 @@ button:hover {
   align-items: center;
   text-align: center;
 } */
+
+.myRecipes{
+  color: black;
+  background: url(assets/img5.jpeg), url(assets/img1.jpeg);
+  background-size: cover;
+  height: 100vh;
+}
+
 .createRecipe{
   width: 60%;
   display: flex;

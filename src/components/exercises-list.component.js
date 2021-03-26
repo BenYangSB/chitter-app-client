@@ -3,49 +3,6 @@ import { Link } from 'react-router-dom';
 import Exercise from '../components/exercise';
 import axios from 'axios';
 
-// class Lst extends Component {
-
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     return <div>
-
-//       <h>Ingredients</h>
-//       {
-//       this.props.ingList.map(ing=>{
-//         return <li>{ing}</li>
-//       })
-//       }
-//     </div>
-
-//   }
-// }
-// const Exercise = props => (
-
-//   <div class = "card" id = "recipe">
-
-
-//       <h>{props.exercise.username}</h>
-//       <p>Dish : {props.exercise.description}</p>
-//       <p>Time to make : {props.exercise.duration} minutes</p>
-
-//       <Lst ingList = {props.exercise.ingredients}></Lst>
-
-//       <br></br>      
-//       <p>{props.exercise.date.substring(0,10)}</p>
-//       { 
-//         props.exercise.userKey == props.currentKey && 
-//         <p>
-//         <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-//         </p>
-//       }
-
-//   </div>
-
-// )
-
 
 export default class ExercisesList extends Component {
   constructor(props) {
@@ -74,7 +31,7 @@ export default class ExercisesList extends Component {
 
 
     following.forEach(followingUserKey => {
-        axios.get('http://localhost:5000/exercises/feed/' + followingUserKey)
+        axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
