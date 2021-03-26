@@ -22,6 +22,8 @@
   text-align: center;
   font-size: 30px;
   flex-wrap: wrap;
+  background-repeat: repeat;
+
 }
 
 
@@ -192,8 +194,11 @@ button:hover {
 .myRecipes{
   color: black;
   background: url(assets/img9.jpeg), url(assets/img1.jpeg);
+  background-repeat: repeat;
   background-size: cover;
+  height: max-content;
   height: 100vh;
+  overflow: auto;
 }
 
 .createRecipe{
@@ -314,7 +319,6 @@ button:hover {
 #nav-link4{
   float: right;
   color: white;
-  margin-left: 45vw;
 }
 
 .sobtn{

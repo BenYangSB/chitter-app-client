@@ -13,7 +13,7 @@ class MyRecipies extends Component {
     }
 
     componentDidMount = () => {
-        console.log("WE ARE HERE")
+
         if (this.props.currUser != null || this.props.currUser != undefined) {
 
             //use this after backend is deployed
