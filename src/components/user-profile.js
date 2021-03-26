@@ -42,12 +42,10 @@ export default class Trending extends Component {
 
 
           <div id="userProf">
-            <p>{"Hello  "+ " !"}</p>
             <div>
-              <p>Followers: {this.state.user[0].followers}</p>
+              <p>Followers: {this.state.user[0].followers}, Following:   {this.state.user[0].following.length}</p>
             </div>
             <div>
-              Following:   {this.state.user[0].following.length}
             </div>
             <MyRecipies currUser = {this.state.user[0]}></MyRecipies>
 

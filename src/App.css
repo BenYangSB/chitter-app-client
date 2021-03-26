@@ -16,8 +16,9 @@
 } */
 
 #userProf{
+  margin-top: 2vh;
   color: white;
-  background: url(assets/img1.jpeg);
+  background-color: black;
   text-align: center;
   font-size: 30px;
   flex-wrap: wrap;
@@ -174,7 +175,7 @@ button:hover {
 
 .homepageData{
   font-size: 50px;
-  color: rgb(92, 92, 92);
+  color: rgb(61, 61, 61);
   margin: 0;
   position: absolute;
   top: 50%;
@@ -190,7 +191,7 @@ button:hover {
 
 .myRecipes{
   color: black;
-  background: url(assets/img5.jpeg), url(assets/img1.jpeg);
+  background: url(assets/img9.jpeg), url(assets/img1.jpeg);
   background-size: cover;
   height: 100vh;
 }
