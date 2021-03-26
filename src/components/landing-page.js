@@ -24,7 +24,7 @@ export default class Landing extends Component {
       <div class = "homepage">
         
         
-        <div>
+        <div class = "homepageData">
             { this.props.currUser != undefined &&
 
                 <span>Hello {this.props.currUser.username} !
@@ -39,7 +39,7 @@ export default class Landing extends Component {
 
             <div>
                 <span id = "loginout2">
-                    <button class = "sobtn"onClick={() => firebase.auth().signOut()}>Sign out!</button>
+                    <button class = "sobtn" onClick={() => firebase.auth().signOut()}>Sign out!</button>
                     <h1 id = "welcome">Welcome {firebase.auth().currentUser.displayName}</h1>
                     <img id = "pfp"
                         alt="profile picture"
