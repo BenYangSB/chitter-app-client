@@ -30,7 +30,7 @@ export default class Navbar extends Component {
             <Link to= {"/user/profile/" + this.props.userKey } className="nav-link">My profile</Link>
             </li>
             <li className="navbar-item">
-            <Link to= {"/feed"} className="nav-link">My Feed</Link>
+            <Link to= {"/feed"} id = "nav-link4"className="nav-link">My Feed</Link>
             </li>
           </ul>
           </div>

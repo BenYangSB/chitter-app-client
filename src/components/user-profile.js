@@ -42,7 +42,7 @@ export default class Trending extends Component {
 
 
           <div id="userProf">
-            <p>{"Hello  " + this.state.user[0].username + " !"}</p>
+            <p>{"Hello  "+ " !"}</p>
             <div>
               <p>Followers: {this.state.user[0].followers}</p>
             </div>
