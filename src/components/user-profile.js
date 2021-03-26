@@ -51,7 +51,6 @@ export default class Trending extends Component {
             </div>
             <MyRecipies currUser = {this.state.user[0]}></MyRecipies>
 
-            <LogIn signOut={this.props.signOut} displayName={this.props.displayName} profilePic={this.props.profilePic} />
           </div>
 
         }
