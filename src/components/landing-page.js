@@ -21,13 +21,13 @@ export default class Landing extends Component {
 
   render() {
     return (
-      <div>
+      <div class = "homepage">
         
         
-        <div class = "landingImage">
+        <div>
             { this.props.currUser != undefined &&
 
-                <span class = "greeting">Hello {this.props.currUser.username} !
+                <span>Hello {this.props.currUser.username} !
                  
                                  
                  <br></br>
@@ -37,10 +37,20 @@ export default class Landing extends Component {
                 
             }
 
+            <div>
+                <span id = "loginout2">
+                    <button class = "sobtn"onClick={() => firebase.auth().signOut()}>Sign out!</button>
+                    <h1 id = "welcome">Welcome {firebase.auth().currentUser.displayName}</h1>
+                    <img id = "pfp"
+                        alt="profile picture"
+                        src={firebase.auth().currentUser.photoURL}
+                    />
+                </span>
+            </div>
 
 
         </div>
-        <div class = "landingImage">
+        {/* <div class = "landingImage">
 
 
             <span id = "loginout2">
@@ -51,7 +61,7 @@ export default class Landing extends Component {
                     src={firebase.auth().currentUser.photoURL}
                   />
             </span>
-        </div>
+        </div> */}
 
 
         
