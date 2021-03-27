@@ -37,7 +37,7 @@ export default class ExercisesList extends Component {
           let temp = this.state.exercises;
 
           response.data.forEach(element => {
-            console.log(element);
+              console.log(element);
               temp.push(element);
           });
           console.log("temp: "+ temp[0]);

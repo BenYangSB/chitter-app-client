@@ -24,6 +24,8 @@ export default class CreateExercise extends Component {
       users: [],
       pictures: [],
       multerImage: null,
+      imageId: "",
+      imgdata: null
     }
     this.onDrop = this.onDrop.bind(this);
 
@@ -37,27 +39,56 @@ export default class CreateExercise extends Component {
     } 
   }
 
+  uploadImageChange(e, method) {
+    console.log("SUBMITTING IMAGE")
+
+    this.setState({
+      multerImage: URL.createObjectURL(e.target.files[0])
+    });
+  }
+
     // function to upload image once it has been captured
   // includes multer and firebase methods
   uploadImage(e, method) {
+
+      console.log("adding image")
+
+      if(e == null || e==undefined)
+        return;
       let imageObj = {};
     
       let imageFormObj = new FormData();
 
-      imageFormObj.append("imageName", "multer-image-" + Date.now());
+      if(imageFormObj == undefined || e.target.files == null)
+        return;
+
+      let imgId = "multer-image-" + Date.now()
+      imageFormObj.append("imageName", imgId);
       imageFormObj.append("imageData", e.target.files[0]);
 
+      console.log(imgId);
+
+      this.setState({
+        imageId: imageFormObj.imageName
+      })
+
+      console.log("adding image")
       // stores a readable instance of 
       // the image being uploaded using multer
       this.setState({
         multerImage: URL.createObjectURL(e.target.files[0])
       });
 
-      axios.post("http://localhost:5000/image/uploadmulter", imageFormObj)
+      console.log(this.state.multerImage)
+
+      axios.post("https://chitterr-app-api.herokuapp.com/image/uploadmulter", imageFormObj)
         .then((data) => {
           if (data.data.success) {
-            alert("Image has been successfully uploaded using multer");
-            this.setDefaultImage("multer");
+            alert("Image has been uploaded!");
+            console.log(data.data.document.imageData.substring(8))
+            this.setState({
+              imgdata : data.data.document.imageData.substring(8)
+            })
           }
         })
         .catch((err) => {
@@ -115,6 +146,8 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    this.uploadImage(e, "multer");
+
     var temp  = this.state.ingredients.split(",");
 
     const exercise = {
@@ -123,10 +156,12 @@ export default class CreateExercise extends Component {
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date,
-      ingredients: temp
+      ingredients: temp,
+      image: this.state.imgdata,
     }
 
     console.log(exercise);
+//    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
 
     axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
       .then(res => console.log(res.data));
@@ -136,6 +171,8 @@ export default class CreateExercise extends Component {
           duration: 0
       })
   }
+
+
   onDrop(picture) {
     this.setState({
         pictures: this.state.pictures.concat(picture),
@@ -145,7 +182,7 @@ export default class CreateExercise extends Component {
   render() {
     return (
     <div className = "createRecipe">
-      <h3>Post New Recipe!</h3>
+      <h3>Post New</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>Username: {this.props.userName}</label>
@@ -179,10 +216,9 @@ export default class CreateExercise extends Component {
         </div>
 
         <div className="process">
-            <h4 className="process__heading">Process: Using Multer</h4>
-            <p className="process__details">Upload image to a node server, connected to a MongoDB database, with the help of multer</p>
+            <p className="process__details">Upload an image!</p>
 
-            <input type="file" className="process__upload-btn" onChange={(e) => this.uploadImage(e, "multer")} />
+            <input type="file" className="process__upload-btn"  onChange={(e) => this.uploadImage(e, "multer")}  />
             <img src={this.state.multerImage} alt="upload-image" className="process__image" />
         </div>
         {

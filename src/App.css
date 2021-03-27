@@ -112,6 +112,11 @@ html {
   }
 }
 
+.process__image{
+  height: 20%;
+  width: 20%;
+}
+
 .feed-title{
   color: rgb(0, 0, 0);
   padding-top: 5vh;
