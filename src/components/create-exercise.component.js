@@ -182,10 +182,8 @@ export default class CreateExercise extends Component {
     console.log(exercise);
 //    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
 
-    axios.post('http://localhost:5000/exercises/add', exercise)
-      .then(res => 
-        
-        
+      axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
+      .then(res =>         
         console.log(res.data));
 
       this.setState({
@@ -214,7 +212,7 @@ export default class CreateExercise extends Component {
           <label>Username: {this.props.userName}</label>
         </div>
         <div className="form-group"> 
-          <label>Description: </label>
+          <label>Description: (TESTING IF CHANGED)</label>
           <input  type="text"
               required
               className="form-control"
