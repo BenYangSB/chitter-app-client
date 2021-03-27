@@ -146,6 +146,11 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    if(this.state.imgdata == undefined || this.state.imgdata == null){
+      alert("please include an image");
+      return;
+    }
+
     this.uploadImage(e, "multer");
 
     var temp  = this.state.ingredients.split(",");
@@ -164,7 +169,10 @@ export default class CreateExercise extends Component {
 //    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
 
     axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
-      .then(res => console.log(res.data));
+      .then(res => 
+        
+        
+        console.log(res.data));
 
       this.setState({
           description: "",
@@ -181,7 +189,9 @@ export default class CreateExercise extends Component {
 
   render() {
     return (
-    <div className = "createRecipe">
+
+      <div class = "createR">
+            <div className = "createRecipe">
       <h3>Post New</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
@@ -240,6 +250,8 @@ export default class CreateExercise extends Component {
         </div>
       </form>
     </div>
+      </div>
+
     )
   }
 }

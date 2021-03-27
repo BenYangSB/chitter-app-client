@@ -20,6 +20,7 @@ export default class EditExercise extends Component {
       description: '',
       ingredients: '',
       duration: 0,
+      image: null,
       users: []
     }
   }
@@ -31,7 +32,8 @@ export default class EditExercise extends Component {
           username: response.data.username,
           description: response.data.description,
           duration: response.data.duration,
-          ingredients: response.data.ingredients.join()
+          ingredients: response.data.ingredients.join(),
+          image: response.data.image
         })   
       })
       .catch(function (error) {
@@ -92,7 +94,8 @@ export default class EditExercise extends Component {
       description: this.state.description,
       date: this.state.date,
       duration: this.state.duration,
-      ingredients: temp
+      ingredients: temp,
+      image: this.state.image
     }
 
     console.log(this.props.match.params.id);
