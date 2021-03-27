@@ -12,6 +12,7 @@ export default class CreateExercise extends Component {
     this.onChangeIngredients = this.onChangeIngredients.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDuration = this.onChangeDuration.bind(this);
+    this.onChangeInstructions = this.onChangeInstructions.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.setImages = this.setImages.bind(this);
@@ -19,6 +20,7 @@ export default class CreateExercise extends Component {
     this.state = {
       ingredients: '',
       description: '',
+      instructions: 'empty',
       duration: 0,
       date: new Date(),
       users: [],
@@ -143,11 +145,22 @@ export default class CreateExercise extends Component {
     })
   }
 
+  onChangeInstructions(e) {
+    this.setState({
+      instructions: e.target.value
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
     if(this.state.imgdata == undefined || this.state.imgdata == null){
       alert("please include an image");
+      return;
+    }
+
+    if(this.state.instructions == ''){
+      alert("please include instructions");
       return;
     }
 
@@ -163,12 +176,13 @@ export default class CreateExercise extends Component {
       date: this.state.date,
       ingredients: temp,
       image: this.state.imgdata,
+      instructions: this.state.instructions,
     }
 
     console.log(exercise);
 //    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
 
-    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
+    axios.post('http://localhost:5000/exercises/add', exercise)
       .then(res => 
         
         
@@ -176,7 +190,9 @@ export default class CreateExercise extends Component {
 
       this.setState({
           description: "",
-          duration: 0
+          duration: 0,
+          instructions: '',
+          ingredients: []
       })
   }
 
@@ -213,6 +229,15 @@ export default class CreateExercise extends Component {
               className="form-control"
               value={this.state.ingredients}
               onChange={this.onChangeIngredients}
+              />
+        </div>
+        <div className="form-group">
+          <label>Instructions: </label>
+          <input 
+              type="text" 
+              className="form-control"
+              value={this.state.instructions}
+              onChange={this.onChangeInstructions}
               />
         </div>
         <div className="form-group">
