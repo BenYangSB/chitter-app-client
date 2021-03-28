@@ -17,10 +17,13 @@ export default class EditExercise extends Component {
 
     this.state = {
       username: '',
+      userKey: '',
       description: '',
+      date: '',
       ingredients: '',
       duration: 0,
       image: null,
+      instructions: "",
       users: []
     }
   }
@@ -28,10 +31,14 @@ export default class EditExercise extends Component {
   componentDidMount() {
     axios.get('https://chitterr-app-api.herokuapp.com/exercises/'+this.props.match.params.id)
       .then(response => {
+        console.log(response.data)
         this.setState({
           username: response.data.username,
+          userKey: response.data.userKey,
           description: response.data.description,
           duration: response.data.duration,
+          date: response.data.date,
+          instructions: response.data.instructions,
           ingredients: response.data.ingredients.join(),
           image: response.data.image
         })   
@@ -92,15 +99,16 @@ export default class EditExercise extends Component {
       username: this.state.username,
       userKey: this.state.userKey,
       description: this.state.description,
-      date: this.state.date,
+      instructions: this.state.instructions,
       duration: this.state.duration,
+      date: this.state.date,
       ingredients: temp,
       image: this.state.image
     }
 
-    console.log(this.props.match.params.id);
+    console.log(exercise);
 
-    axios.post('https://chitterr-app-api.herokuapp.com/exercises/update/' + this.props.match.params.id, exercise)
+    axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
       .then(res => console.log(res.data));
 
   }
