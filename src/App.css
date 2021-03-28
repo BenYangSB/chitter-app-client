@@ -221,7 +221,7 @@ button:hover {
 } */
 
 .myRecipes{
-  color: black;
+  color: rgb(255, 255, 255);
   background: url(assets/img71.jpeg);
   background-repeat: repeat;
   background-size: cover;
