@@ -118,7 +118,7 @@ html {
 }
 
 .feed-title{
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding-top: 5vh;
   font-size: 2.5rem;
   font-weight: 600;
@@ -139,7 +139,8 @@ html {
 }
 
 .feedWrap{
-  background: url(assets/img22.jpeg);
+  color: rgb(0, 0, 0);
+  background: url(assets/12.jpeg);
 }
 
 .createR{
