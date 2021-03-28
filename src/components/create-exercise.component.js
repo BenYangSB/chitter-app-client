@@ -65,8 +65,8 @@ export default class CreateExercise extends Component {
         return;
 
       let imgId = "multer-image-" + Date.now()
+      imageFormObj.append("image", e.target.files[0]);
       imageFormObj.append("imageName", imgId);
-      imageFormObj.append("imageData", e.target.files[0]);
 
       console.log(imgId);
 
@@ -83,15 +83,12 @@ export default class CreateExercise extends Component {
 
       console.log(this.state.multerImage)
 
-      axios.post("https://chitterr-app-api.herokuapp.com/image/uploadmulter", imageFormObj)
+      axios.post('https://chitterr-app-api.herokuapp.com/image/uploadmulter', imageFormObj)
         .then((data) => {
-          if (data.data.success) {
-            alert("Image has been uploaded!");
-            console.log(data.data.document.imageData.substring(8))
+            console.log(data.data.Location)
             this.setState({
-              imgdata : data.data.document.imageData.substring(8)
+              imgdata: data.data.Location
             })
-          }
         })
         .catch((err) => {
           alert("Error while uploading image using multer");
@@ -212,7 +209,7 @@ export default class CreateExercise extends Component {
           <label>Username: {this.props.userName}</label>
         </div>
         <div className="form-group"> 
-          <label>Description: (TESTING IF CHANGED)</label>
+          <label>Description:</label>
           <input  type="text"
               required
               className="form-control"
