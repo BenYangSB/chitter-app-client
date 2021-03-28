@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PROF from '../assets/sss.png'
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -101,7 +102,6 @@ export default class CreateUser extends Component {
         console.log(error);
       })
 
-    console.log(this.state.currentUser);
   }
 
   componentDidMount() {
@@ -148,25 +148,29 @@ export default class CreateUser extends Component {
     return (
       <div class="absFeed">
         <div className="followBar">
-          <div className="user">Username</div>
-          <div className="followers">Followers</div>
+          <div className="user">Discover other chefs</div>
           {/* <div id="followStatus">Follow Status</div> */}
         </div>
         {
           this.state.users.map((user) => {
-            return <div class="follow">
+            return <div class = "card" id="follow">
               {console.log(user.username)}
+              {    console.log(this.state.users)}
+              {/* <PROF></PROF> */}
+
+              {/* <img class = "profimg"></img> */}
 
               <div className="user">{user.username}</div>
-              <div className="followers">{user.followers}</div>
+              <div className="followers">&#x1F373; {user.followers} followers</div>
+
               {this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
 
-                <button id="followBtn" onClick={() => this.onFollow(user)}>
-                  Follow!
+                <button id="followBtn1" onClick={() => this.onFollow(user)}>
+                  &#10003;
                           </button>
                 :
-                <button id="followBtn" onClick={() => this.onUnFollow(user)}>
-                  UnFollow!
+                <button id="followBtn2" onClick={() => this.onUnFollow(user)}>
+                  &#10005;
                           </button>
               }
 

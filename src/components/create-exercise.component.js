@@ -202,8 +202,13 @@ export default class CreateExercise extends Component {
     return (
 
       <div class = "createR">
+
+        <div>
+          <br></br>
+          <br></br>
+        </div>
             <div className = "createRecipe">
-      <h3>Post New</h3>
+      <h3>Post a new recipe!</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>Username: {this.props.userName}</label>

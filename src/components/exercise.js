@@ -31,7 +31,7 @@ export default class Exercise extends Component  {
                     console.log("https://chitterr-app-api.herokuapp.com/image/picture/" + this.props.exercise.image)
                 }
                 { this.props.exercise.image != undefined && 
-                    <img src= {this.props.exercise.image}/>
+                    <img class = "awsImage" src= {this.props.exercise.image}/>
                 }
                 {/* <p>{this.props.exercise.date.substring(0, 10)}</p> */}
                 {   this.props.display &&
