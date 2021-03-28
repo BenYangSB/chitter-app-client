@@ -23,9 +23,9 @@ export default class Navbar extends Component {
             <li className="navbar-item">
             <Link to="/user/discover" className="nav-link">Discover Other Chefs</Link>
             </li>
-            <li className="navbar-item">
+            {/* <li className="navbar-item">
             <Link to="/user/trending" className="nav-link">Trending</Link>
-            </li>
+            </li> */}
             <li className="navbar-item">
             <Link to= {"/user/profile/" + this.props.userKey } className="nav-link">My profile</Link>
             </li>
