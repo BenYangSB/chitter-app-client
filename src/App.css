@@ -141,7 +141,7 @@ html {
   width: 100vw;
   color: rgb(0, 0, 0);
   height: 100vh;
-  background-image: linear-gradient(rgb(159, 102, 62), rgb(151, 114, 88));
+  background-image: linear-gradient(rgb(248, 241, 236), rgb(219, 204, 69));
   background-size: cover;
   
 }
@@ -230,7 +230,7 @@ button:hover {
   display: flex;
   margin : auto;
   flex-direction: column;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   /* align-items: center; */
   /* text-align: center; */
 }

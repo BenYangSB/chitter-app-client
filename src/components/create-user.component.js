@@ -160,7 +160,8 @@ export default class CreateUser extends Component {
 
               {/* <img class = "profimg"></img> */}
 
-              <div className="user">{user.username}</div>
+              <div className="user">{user.username}
+              </div>
               <div className="followers">&#x1F373; {user.followers} followers</div>
 
               {this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
