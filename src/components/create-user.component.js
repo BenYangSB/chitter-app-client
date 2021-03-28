@@ -146,11 +146,15 @@ export default class CreateUser extends Component {
 
   render() {
     return (
+      <div class = "followOthers">
+
+
       <div class="absFeed">
-        <div className="followBar">
-          <div className="user">Discover other chefs</div>
-          {/* <div id="followStatus">Follow Status</div> */}
-        </div>
+
+      <br></br>
+      <div id = "followTitle" className="user">Discover other chefs</div>
+
+
         {
           this.state.users.map((user) => {
             return <div class = "card" id="follow">
@@ -178,6 +182,8 @@ export default class CreateUser extends Component {
             </div>;
           })
         }
+        </div>
+        
       </div>
     )
   }

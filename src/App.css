@@ -133,16 +133,20 @@ html {
   word-wrap: break-word;
 
 }
+
+.followOthers{
+  background: url(assets/12.jpeg);
+}
+
 .feedWrap{
   background: url(assets/img22.jpeg);
 }
 
 .createR{
   width: 100vw;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   height: 100vh;
-  background-image: linear-gradient(rgb(248, 241, 236), rgb(219, 204, 69));
-  background-size: cover;
+  background: url(assets/12.jpeg);
   
 }
 
@@ -230,7 +234,7 @@ button:hover {
   display: flex;
   margin : auto;
   flex-direction: column;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   /* align-items: center; */
   /* text-align: center; */
 }
@@ -390,6 +394,11 @@ button:hover {
 .profimg{
   background-image: url('assets/sss.png');
 }
+
+#followTitle{
+  color: white;
+  font-size: 2vw;
+}
 .followBar {
   background-color: white;
   margin-top: 2%;
@@ -401,7 +410,8 @@ button:hover {
 }
 #follow{  /* container div*/
   padding: 1%;
-  margin-bottom: 2%;
+  margin-bottom: 1%;  margin-top: 1%;
+
   display : grid;
   grid-template-columns: 30vw 20vw 30vw;
   font-size : 1.5rem;
