@@ -60,7 +60,8 @@
 }
 
 body {
-  background-color: white;
+  /* background-color: white; */
+  /* color : white; */
 }
 
 html {
@@ -156,6 +157,7 @@ html {
   display: flex;
   margin: auto;
   flex-direction: column;
+  color : white;
   /* background-color: white; */
 
   /* justify-content: space-between; */
