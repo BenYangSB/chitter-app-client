@@ -334,6 +334,7 @@ button:hover {
 .awsImage {
   border-radius: 2rem;
   max-height: 30vh;
+  object-fit: cover;
 }
 
 .greeting{
