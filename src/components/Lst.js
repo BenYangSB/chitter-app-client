@@ -11,11 +11,14 @@ class Lst extends Component {
         return (
             <div>
 
-                <h className="ingredientTitle">Ingredients</h>
-                {
-                    this.props.ingList.map(ing => {
-                        return <li className="ingredient">{ing}</li>
-                    })
+                {this.props.ingList.length > 0 && this.props.ingList[0] != '' &&
+                    <div>
+                    <h className="ingredientTitle">Ingredients</h>
+                    {this.props.ingList.map(ing => {
+                        if (ing != '')
+                            return <li className="ingredient">{ing}</li>
+                    })}
+                    </div>
                 }
             </div>
         );

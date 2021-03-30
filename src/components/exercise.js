@@ -16,7 +16,7 @@ export default class Exercise extends Component {
 
     render() {
         return (
-            <div class="card" id="recipe">
+            <div className="card" id="recipe">
 
                 <h className="recipePoster">{this.props.exercise.username}</h>
                 <h className="recipeTitle">{this.props.exercise.description}</h>
@@ -43,7 +43,8 @@ export default class Exercise extends Component {
                 {   this.props.showMore &&
                     // ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
                     <p class="more">
-                        <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link>
+                        {/* <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link> */}
+                        <Link to={"/recipe/" + this.props.exercise._id}>&#10158;</Link>
                     </p>
                 }
 

@@ -21,6 +21,7 @@ import Img2 from "./assets/img2.jpeg"
 import Img3 from "./assets/img3.jpeg"
 import Img4 from "./assets/img4.jpeg"
 import Landing from "./components/landing-page"
+import RecipeDetailed from './components/RecipeDetailed';
 
 
 class App extends React.Component {
@@ -49,6 +50,14 @@ class App extends React.Component {
 
       this.setState({ isSignedIn: !!user })
 
+      if (user) {
+        const localStorage = window.localStorage;
+        localStorage.setItem("currUserKey", firebase.auth().currentUser.uid);
+      } else {
+        const localStorage = window.localStorage;
+        localStorage.setItem("currUserKey", 'none');
+      }
+
       const userAdd = {
         username: firebase.auth().currentUser.displayName,
         userKey: firebase.auth().currentUser.uid,
@@ -66,7 +75,7 @@ class App extends React.Component {
           if (response != null && response.data != null && response.data.length > 0) {
             this.setState({
               currentUser: response.data[0],
-            })
+            });
           }
         })
         .catch((error) => {
@@ -95,7 +104,7 @@ class App extends React.Component {
             <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} userName={firebase.auth().currentUser.displayName} />} />
             <Route path="/user/discover" component={() => <CreateUser userKey={firebase.auth().currentUser.uid} />} />
             <Route path="/user/profile/:id" component={() => <UserProfile currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL}/>} />
-
+            <Route path="recipe/:id" component={RecipeDetailed} />
             {/* </div> */}
 
 
