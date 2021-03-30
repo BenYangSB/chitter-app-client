@@ -16,10 +16,40 @@ export default class CreateUser extends Component {
     }
   }
 
+  componentDidMount() {
+    this.readUsers();
+    console.log(this.props.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
+      .then(response => {
+        if (response.data != null && response.data.length > 0) {
+          this.setState({
+            currentUser: response.data[0],
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+    console.log(this.state.currentUser);
+  }
+
+  readUsers = () => {
+    axios.get('https://chitterr-app-api.herokuapp.com/users/')
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            users: response.data.map(user => user),
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
 
   onFollow = (input) => {
-
-
     if (input.userKey == this.state.userKey || this.state.currentUser == null || this.state.currentUser == undefined)
       return;
 
@@ -46,11 +76,15 @@ export default class CreateUser extends Component {
         followers: input.followers + 1,
       }
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
-        .then(res => console.log(res.data));
+        .then(res => {
+          console.log(res.data)
+          this.readUsers();
+        });
     }
 
-    this.readUsers();
+    // this.readUsers();
   }
+
   onUnFollow = (input) => {
 
     console.log(this.state.currentUser)
@@ -83,44 +117,15 @@ export default class CreateUser extends Component {
         followers: input.followers - 1,
       }
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
-        .then(res => console.log(res.data));
+        .then(res => {
+          console.log(res.data)
+          this.readUsers();
+        });
     }
 
-    this.readUsers();
+    // this.readUsers();
   }
 
-  readUsers = () => {
-    axios.get('https://chitterr-app-api.herokuapp.com/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user),
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
-  }
-
-  componentDidMount() {
-    this.readUsers();
-    console.log(this.props.userKey)
-    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
-      .then(response => {
-        if (response.data != null && response.data.length > 0) {
-          this.setState({
-            currentUser: response.data[0],
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
-    console.log(this.state.currentUser);
-  }
   onChangeUsername(e) {
     this.setState({
       username: e.target.value
@@ -146,44 +151,44 @@ export default class CreateUser extends Component {
 
   render() {
     return (
-      <div class = "followOthers">
+      <div class="followOthers">
 
 
-      <div class="absFeed">
+        <div class="absFeed">
 
-      <br></br>
-      <div id = "followTitle" className="user">Discover other chefs</div>
+          <br></br>
+          <div id="followTitle" className="user">Discover other chefs</div>
 
 
-        {
-          this.state.users.map((user) => {
-            return <div class = "card" id="follow">
-              {console.log(user.username)}
-              {    console.log(this.state.users)}
-              {/* <PROF></PROF> */}
+          {
+            this.state.users.map((user) => {
+              return <div class="card" id="follow">
+                {console.log(user.username)}
+                {console.log(this.state.users)}
+                {/* <PROF></PROF> */}
 
-              {/* <img class = "profimg"></img> */}
+                {/* <img class = "profimg"></img> */}
 
-              <div className="user">{user.username}
-              </div>
-              <div className="followers">&#x1F373; {user.followers} followers</div>
+                <div className="user">{user.username}
+                </div>
+                <div className="followers">&#x1F373; {user.followers} followers</div>
 
-              {this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
+                {this.state.currentUser != null && !this.state.currentUser.following.includes(user.userKey) ?
 
-                <button id="followBtn1" onClick={() => this.onFollow(user)}>
-                  &#10003;
+                  <button id="followBtn1" onClick={() => this.onFollow(user)}>
+                    &#10003;
                           </button>
-                :
-                <button id="followBtn2" onClick={() => this.onUnFollow(user)}>
-                  &#10005;
+                  :
+                  <button id="followBtn2" onClick={() => this.onUnFollow(user)}>
+                    &#10005;
                           </button>
-              }
+                }
 
-            </div>;
-          })
-        }
+              </div>;
+            })
+          }
         </div>
-        
+
       </div>
     )
   }
