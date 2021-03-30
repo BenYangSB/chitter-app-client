@@ -72,7 +72,7 @@ export default class ExercisesList extends Component {
     return this.state.exercises.map(currentexercise => {
       if (currentexercise == undefined)
         return null;
-      return <Exercise display={true} ingList={this.ingList()} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+      return <Exercise display={true} ingList={this.ingList()} currUser={this.props.currUser} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
     })
   }
 
