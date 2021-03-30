@@ -288,9 +288,23 @@ button:hover {
     /* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
 }
 
-.recipetitle{
-  font-size: 1.5vw;
+.recipePoster {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.recipeTitle{
+  font-size: 2rem;
   font-style: italic;
+}
+.recipeTime {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.ingredientTitle {
+  font-size: 1.5rem;
+}
+.ingredient {
+  font-size: 1rem;
 }
 
 .example{
@@ -312,6 +326,10 @@ button:hover {
   text-align: center;
   justify-content: center;
   margin-bottom: 10%;
+}
+
+.awsImage {
+  border-radius: 2rem;
 }
 
 .greeting{
@@ -446,18 +464,6 @@ button:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 #welcome{
   font-size: 15px;
 }

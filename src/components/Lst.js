@@ -11,10 +11,10 @@ class Lst extends Component {
         return (
             <div>
 
-                <h>Ingredients</h>
+                <h className="ingredientTitle">Ingredients</h>
                 {
                     this.props.ingList.map(ing => {
-                        return <li>{ing}</li>
+                        return <li className="ingredient">{ing}</li>
                     })
                 }
             </div>

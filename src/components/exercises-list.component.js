@@ -10,7 +10,7 @@ export default class ExercisesList extends Component {
 
     this.deleteExercise = this.deleteExercise.bind(this)
 
-    this.state = {exercises: []};
+    this.state = { exercises: [] };
   }
 
   componentDidMount() {
@@ -19,28 +19,28 @@ export default class ExercisesList extends Component {
     let tempUser = {
       username: "henry chu",
       userKey: "4",
-      following: ["1","xstGsReFpIOkeu46CxbBlaE9skr1","4"],
+      following: ["1", "xstGsReFpIOkeu46CxbBlaE9skr1", "4"],
       followers: 0
     }
 
     let following = [];
-    if(this.props.currUser != null && this.props.currUser != undefined){
+    if (this.props.currUser != null && this.props.currUser != undefined) {
       following = this.props.currUser.following;
     }
     // console.log(following)
 
 
     following.forEach(followingUserKey => {
-        axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
+      axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
 
           response.data.forEach(element => {
-              console.log(element);
-              temp.push(element);
+            console.log(element);
+            temp.push(element);
           });
-          console.log("temp: "+ temp[0]);
+          console.log("temp: " + temp[0]);
           this.setState({ exercises: temp })
         })
         .catch((error) => {
@@ -51,7 +51,7 @@ export default class ExercisesList extends Component {
   }
 
   ingList(ingredients) {
-    if(ingredients == undefined)
+    if (ingredients == undefined)
       return;
 
     ingredients.map(ing => {
@@ -60,8 +60,8 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('https://chitterr-app-api.herokuapp.com/exercises/'+id)
-      .then(response => {});
+    axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
+      .then(response => { });
 
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -70,21 +70,21 @@ export default class ExercisesList extends Component {
 
   exerciseList() {
     return this.state.exercises.map(currentexercise => {
-      if(currentexercise == undefined)
+      if (currentexercise == undefined)
         return null;
-      return <Exercise ingList = {this.ingList()} currentKey = {this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
+      return <Exercise display={true} ingList={this.ingList()} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
     })
   }
 
   render() {
     return (
-      <div class = "feedWrap">
-        <div className = "absFeed">
-          <div className = "feed-title">Feed</div>
+      <div class="feedWrap">
+        <div className="absFeed">
+          <div className="feed-title">Feed</div>
 
-          <div className = "feed-total">
-              {/* {console.log(this.props.currUser.following)} */}
-              { this.exerciseList() }
+          <div className="feed-total">
+            {/* {console.log(this.props.currUser.following)} */}
+            {this.exerciseList()}
           </div>
         </div>
       </div>

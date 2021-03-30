@@ -5,48 +5,48 @@ import axios from 'axios';
 
 
 
-export default class Exercise extends Component  {
+export default class Exercise extends Component {
 
     constructor(props) {
         super(props);
-    
-        this.state = {image: null};
-      }
+
+        this.state = { image: null };
+    }
 
 
-    render(){
+    render() {
         return (
             <div class="card" id="recipe">
-    
-                <h>{this.props.exercise.username}</h>
-                <h class = "recipetitle">{this.props.exercise.description}</h>
 
-                {/* <p>Time to make : {this.props.exercise.duration} minutes</p>
-                <img src = ""></img>
+                <h className="recipePoster">{this.props.exercise.username}</h>
+                <h className="recipeTitle">{this.props.exercise.description}</h>
+
+                <p className="recipeTime">Time to make : {this.props.exercise.duration} minutes</p>
+                <img src=""></img>
                 <Lst ingList={this.props.exercise.ingredients}></Lst>
-    
+
                 <br></br>
-     */}
-                { this.props.exercise.image != undefined && 
+
+                { this.props.exercise.image != undefined &&
                     console.log("https://chitterr-app-api.herokuapp.com/image/picture/" + this.props.exercise.image)
                 }
-                { this.props.exercise.image != undefined && 
-                    <img class = "awsImage" src= {this.props.exercise.image}/>
+                { this.props.exercise.image != undefined &&
+                    <img className="awsImage" src={this.props.exercise.image} />
                 }
                 {/* <p>{this.props.exercise.date.substring(0, 10)}</p> */}
                 {   this.props.display &&
-                    ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser!= undefined && this.props.exercise.userKey == this.props.currUser.userKey ))  &&
-                    <p class = "editDelete">
+                    ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
+                    <p class="editDelete">
                         <Link to={"/edit/" + this.props.exercise._id}>&#9999;</Link> | <a href="#" onClick={() => { this.props.deleteExercise(this.props.exercise._id) }}>&#128465;</a>
                     </p>
                 }
                 {   !this.props.display &&
-                    ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser!= undefined && this.props.exercise.userKey == this.props.currUser.userKey ))  &&
-                    <p class = "more">
-                        <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link> 
+                    ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
+                    <p class="more">
+                        <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link>
                     </p>
                 }
-    
+
             </div>
         );
     }
