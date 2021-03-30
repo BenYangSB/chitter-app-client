@@ -137,6 +137,7 @@ html {
 
 .followOthers{
   background: url(assets/12.jpeg);
+  color: #000000;
 }
 
 .feedWrap{
@@ -332,6 +333,7 @@ button:hover {
 
 .awsImage {
   border-radius: 2rem;
+  max-height: 30vh;
 }
 
 .greeting{
@@ -432,6 +434,7 @@ button:hover {
 #follow{  /* container div*/
   padding: 1%;
   margin-bottom: 1%;  margin-top: 1%;
+  color: #000000;
 
   display : grid;
   grid-template-columns: 30vw 20vw 30vw;

@@ -34,14 +34,14 @@ export default class Exercise extends Component {
                     <img className="awsImage" src={this.props.exercise.image} />
                 }
                 {/* <p>{this.props.exercise.date.substring(0, 10)}</p> */}
-                {   this.props.display &&
+                {   !this.props.showMore &&
                     ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
                     <p class="editDelete">
                         <Link to={"/edit/" + this.props.exercise._id}>&#9999;</Link> | <a href="#" onClick={() => { this.props.deleteExercise(this.props.exercise._id) }}>&#128465;</a>
                     </p>
                 }
-                {   !this.props.display &&
-                    ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
+                {   this.props.showMore &&
+                    // ((this.props.exercise.userKey == this.props.currentKey) || (this.props.currUser != null && this.props.currUser != undefined && this.props.exercise.userKey == this.props.currUser.userKey)) &&
                     <p class="more">
                         <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link>
                     </p>
