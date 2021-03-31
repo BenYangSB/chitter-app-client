@@ -104,7 +104,7 @@ class App extends React.Component {
             <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} userName={firebase.auth().currentUser.displayName} />} />
             <Route path="/user/discover" component={() => <CreateUser userKey={firebase.auth().currentUser.uid} />} />
             <Route path="/user/profile/:id" component={() => <UserProfile currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL}/>} />
-            <Route path="recipe/:id" component={RecipeDetailed} />
+            <Route path="/recipe/:idrecipe/:id" component={RecipeDetailed} />
             {/* </div> */}
 
 
