@@ -114,6 +114,15 @@ html {
   }
 }
 
+a {
+  text-decoration: none;
+}
+a:hover {
+  cursor:pointer;
+  text-decoration: none;
+  filter : brightness(70%);
+}
+
 .process__image{
   height: 20%;
   width: 20%;
@@ -427,6 +436,9 @@ button:hover {
 }
 .nav-link {
   font-size: 1rem;
+}
+.nav-link:hover {
+  filter: brightness(90%);
 }
 .trendingpic{
   justify-content: center;
