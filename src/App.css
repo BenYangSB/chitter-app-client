@@ -60,6 +60,7 @@
 }
 
 body {
+  background-image: url(assets/12.jpeg);
   /* background-color: white; */
   /* color : white; */
 }
@@ -308,6 +309,67 @@ button:hover {
 }
 .ingredient {
   font-size: 1rem;
+}
+
+.space {
+  height: 8vh;
+}
+.recipeDetailedContainer {
+  height: 110vh;
+  width: 100%;
+  /* background-image: url(assets/12.jpeg); */
+}
+.recipeDetailedCard {
+  border-radius: 2rem;
+  box-shadow: 5px 5px rgb(76, 74, 74);
+  margin: auto;
+  padding: 3rem;
+  width: 70vw;
+  height: auto;
+  background: url(assets/img2.jpeg);
+  color: white;
+}
+.recipeTitleDetailed {
+  font-size: 3rem;
+}
+.recipePosterDetailed {
+  width: fit-content;
+  font-size: 1.5rem;
+  font-style: italic;
+  float: right;
+  clear : both;
+}
+.recipeTime {
+  margin-top: 2vh;
+  font-size: 2rem;
+}
+.recipeDetIngredients * {
+  font-size: 2rem;
+}
+.instructionsTitle {
+  font-size: 2.5rem;;
+}
+.instructions {
+  margin-left: 5%;
+  font-size: 2rem;
+}
+.recipeDetImg {
+  margin: auto;
+  margin-top: 3vh;
+  max-width: 95%;
+  max-height: 80%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 2rem;
+  display: flex;
+  align-self: center;
+}
+.detailedEditDelete {
+  width:fit-content;
+  height: fit-content;
+  /* margin: auto; */
+  margin-top: 5%;
+  font-size: 2rem;;
 }
 
 .example{

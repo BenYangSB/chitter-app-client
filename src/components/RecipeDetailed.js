@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useParams } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from './Lst';
-import {getCurrUserKey} from './localStorageFunctions';
+import { getCurrUserKey } from './localStorageFunctions';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom';
 
 
-const RecipeDetailed = () => {
+const RecipeDetailed = (props) => {
 
     const params = useParams(); // used to get the id from the url
     const [recipe, setRecipe] = useState(null);
@@ -20,15 +20,6 @@ const RecipeDetailed = () => {
             .catch(err => console.log("Error: " + err));
     }, []);
 
-    const ingList = (ingredients) => {
-        if (ingredients == undefined)
-            return;
-
-        ingredients.map(ing => {
-            return <li>{ing}</li>
-        })
-    };
-
     const deleteExercise = (id) => {
         axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
             .then(response => { console.log(response.data) });
@@ -39,26 +30,27 @@ const RecipeDetailed = () => {
     };
 
     return (
-        <div>
-            hello
+        <div className="recipeDetailedContainer">
+            <div className="space"></div>
             {recipe != null &&
-                <div className="card">
+                <div className="recipeDetailedCard">
                     <div className='recipeTitleDetailed'>{recipe.description}</div>
                     <div className="recipePosterDetailed">{recipe.username}</div>
-                    <p className="recipeTime">Time to make : {this.props.exercise.duration} minutes</p>
-                    <List ingList={ingList(recipe.ingredients)} />
+                    <p className="recipeTime">Time to make : {recipe.duration} minutes</p>
+                    <div className="recipeDetIngredients"><List ingList={recipe.ingredients} /></div>
                     <div className="instructionsTitle">Instructions:</div>
                     <div className="instructions">{recipe.instructions}</div>
                     {recipe.image != undefined &&
-                        <img alt="Image of Recipe" src={recipe.image} />}
+                        <img className="recipeDetImg" alt="Image of Recipe" src={recipe.image} />}
                     {
                         (getCurrUserKey() == recipe.userKey && getCurrUserKey() != 'none') &&
-                        <p class="editDelete">
+                        <p className="editDelete detailedEditDelete">
                             <Link to={"/edit/" + params.id}>&#9999;</Link> | <a href="#" onClick={() => { deleteExercise(recipe._id) }}>&#128465;</a>
                         </p>
                     }
                 </div>
             }
+            <div className="space"></div>
         </div>
     );
 }

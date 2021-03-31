@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Exercise from '../components/exercise';
+import Exercise from './exercise';
 import axios from 'axios';
 
 
