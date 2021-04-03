@@ -89,67 +89,67 @@ class App extends React.Component {
 
       <Router class="complete">
 
-        
-         <div class="everything">
-         {this.state.isSignedIn &&
- 
-          <div>
-            <Navbar isSignedIn = {this.state.isSignedIn} userKey={firebase.auth().currentUser.uid} />
-            <br />
-            <Route path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
-            <Route path="/feed" exact component={() => <ExercisesList userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
-            <Route path="/user/recipies" component={() =><MyRecipies currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
-            <Route path="/user/trending" component={Trending} />
-            <Route path="/edit/:id" component={EditExercise} />
-            <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} userName={firebase.auth().currentUser.displayName} />} />
-            <Route path="/user/discover" component={() => <CreateUser userKey={firebase.auth().currentUser.uid} />} />
-            <Route path="/user/profile/:id" component={() => <UserProfile currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL}/>} />
-            <Route path="/recipe/:idrecipe/:id" component={RecipeDetailed} />
-            {/* </div> */}
+
+        <div class="everything">
+          {this.state.isSignedIn &&
+
+            <div>
+              <Navbar isSignedIn={this.state.isSignedIn} userKey={firebase.auth().currentUser.uid} />
+              <br />
+              <Route path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route path="/feed" exact component={() => <ExercisesList userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route path="/user/recipies" component={() => <MyRecipies currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route path="/user/trending" component={Trending} />
+              <Route path="/edit/:id" component={EditExercise} />
+              <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} userName={firebase.auth().currentUser.displayName} />} />
+              <Route path="/user/discover" component={() => <CreateUser userKey={firebase.auth().currentUser.uid} />} />
+              <Route path="/user/profile/:id" component={() => <UserProfile currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL} />} />
+              <Route path="/recipe/:id" component={RecipeDetailed} />
+              {/* </div> */}
 
 
-            <div className="logIn">
+              <div className="logIn">
+              </div>
+
             </div>
-
-          </div>
           }
-        {
-          <div class= { this.state.isSignedIn ? "loggedIn" : "login" }
-          style={{ 
-            // backgroundImage: `url(${Img3})`,
-            // backgroundRepeat: `url(${Img2})`,
-          }}>
-              {   !this.state.isSignedIn && 
+          {
+            <div class={this.state.isSignedIn ? "loggedIn" : "login"}
+              style={{
+                // backgroundImage: `url(${Img3})`,
+                // backgroundRepeat: `url(${Img2})`,
+              }}>
+              {!this.state.isSignedIn &&
 
 
 
-                  <div>
-                          <div class = "loginpage" >
-                            
+                <div>
+                  <div class="loginpage" >
 
-                            <p class = "title">Welcome to Chitter, a website for chefs and cooking enthusiasts!</p>
-                            <p class = "title">Please sign in to continue. </p>
 
-                            <StyledFirebaseAuth
-                              uiConfig={this.uiConfig}
-                              firebaseAuth={firebase.auth()}
-                            />
-                            {/* <p class = "title">Explore and post your favorite recipes!</p> */}
+                    <p class="title">Welcome to Chitter, a website for chefs and cooking enthusiasts!</p>
+                    <p class="title">Please sign in to continue. </p>
 
-                
-                  </div>
-      
+                    <StyledFirebaseAuth
+                      uiConfig={this.uiConfig}
+                      firebaseAuth={firebase.auth()}
+                    />
+                    {/* <p class = "title">Explore and post your favorite recipes!</p> */}
 
 
                   </div>
+
+
+
+                </div>
 
               }
-          </div>
-        }
+            </div>
+          }
 
 
 
-         </div>
+        </div>
 
       </Router>
 
@@ -157,4 +157,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default App;

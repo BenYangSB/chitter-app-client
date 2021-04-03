@@ -11,7 +11,7 @@ class Lst extends Component {
         return (
             <div>
 
-                {this.props.ingList.length > 0 && this.props.ingList[0] != '' &&
+                {this.props.ingList && this.props.ingList.length > 0 && this.props.ingList[0] != '' &&
                     <div>
                     <h className="ingredientTitle">Ingredients</h>
                     {this.props.ingList.map(ing => {

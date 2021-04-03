@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Lst from '../components/Lst';
+import Lst from './Lst';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 

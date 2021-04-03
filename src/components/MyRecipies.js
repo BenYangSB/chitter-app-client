@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Exercise from '../components/exercise';
+import Exercise from './exercise';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
