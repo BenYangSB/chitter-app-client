@@ -38,7 +38,7 @@ export default class CreateExercise extends Component {
       this.setState({
         multerImage: DefaultImg
       });
-    } 
+    }
   }
 
   uploadImageChange(e, method) {
@@ -49,52 +49,52 @@ export default class CreateExercise extends Component {
     });
   }
 
-    // function to upload image once it has been captured
+  // function to upload image once it has been captured
   // includes multer and firebase methods
   uploadImage(e, method) {
 
-      console.log("adding image")
+    console.log("adding image")
 
-      if(e == null || e==undefined)
-        return;
-      let imageObj = {};
-    
-      let imageFormObj = new FormData();
+    if (e == null || e == undefined)
+      return;
+    let imageObj = {};
 
-      if(imageFormObj == undefined || e.target.files == null)
-        return;
+    let imageFormObj = new FormData();
 
-      let imgId = "multer-image-" + Date.now()
-      imageFormObj.append("image", e.target.files[0]);
-      imageFormObj.append("imageName", imgId);
+    if (imageFormObj == undefined || e.target.files == null)
+      return;
 
-      console.log(imgId);
+    let imgId = "multer-image-" + Date.now()
+    imageFormObj.append("image", e.target.files[0]);
+    imageFormObj.append("imageName", imgId);
 
-      this.setState({
-        imageId: imageFormObj.imageName
+    console.log(imgId);
+
+    this.setState({
+      imageId: imageFormObj.imageName
+    })
+
+    console.log("adding image")
+    // stores a readable instance of 
+    // the image being uploaded using multer
+    this.setState({
+      multerImage: URL.createObjectURL(e.target.files[0])
+    });
+
+    console.log(this.state.multerImage)
+
+    axios.post('https://chitterr-app-api.herokuapp.com/image/uploadmulter', imageFormObj)
+      .then((data) => {
+        console.log(data.data.Location)
+        this.setState({
+          imgdata: data.data.Location
+        })
       })
-
-      console.log("adding image")
-      // stores a readable instance of 
-      // the image being uploaded using multer
-      this.setState({
-        multerImage: URL.createObjectURL(e.target.files[0])
+      .catch((err) => {
+        alert("Error while uploading image using multer");
+        this.setDefaultImage("multer");
       });
 
-      console.log(this.state.multerImage)
-
-      axios.post('https://chitterr-app-api.herokuapp.com/image/uploadmulter', imageFormObj)
-        .then((data) => {
-            console.log(data.data.Location)
-            this.setState({
-              imgdata: data.data.Location
-            })
-        })
-        .catch((err) => {
-          alert("Error while uploading image using multer");
-          this.setDefaultImage("multer");
-        });
-  
   }
 
 
@@ -119,9 +119,9 @@ export default class CreateExercise extends Component {
   }
 
 
-  onChangeIngredients(e){
+  onChangeIngredients(e) {
     this.setState({
-        ingredients: e.target.value
+      ingredients: e.target.value
     })
   }
   onChangeDescription(e) {
@@ -151,19 +151,19 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    if(this.state.imgdata == undefined || this.state.imgdata == null){
+    if (this.state.imgdata == undefined || this.state.imgdata == null) {
       alert("please include an image");
       return;
     }
 
-    if(this.state.instructions == ''){
+    if (this.state.instructions == '') {
       alert("please include instructions");
       return;
     }
 
     this.uploadImage(e, "multer");
 
-    var temp  = this.state.ingredients.split(",");
+    var temp = this.state.ingredients.split(",");
 
     const exercise = {
       username: this.props.userName,
@@ -177,104 +177,133 @@ export default class CreateExercise extends Component {
     }
 
     console.log(exercise);
-//    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
+    //    axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
 
-      axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
-      .then(res =>         
-        console.log(res.data));
+    let recipeObjectId = null;
 
-      this.setState({
-          description: "",
-          duration: 0,
-          instructions: '',
-          ingredients: []
-      })
+    axios.post('http://localhost:5000/exercises/add/', exercise)
+      .then(res => {
+        console.log(res.data)
+        recipeObjectId = res._id;   // this does not give u the object id (not working)
+
+        const newRecipes = this.props.currUser.recipes ? this.props.currUser.recipes : [];
+        newRecipes.push(recipeObjectId);
+        const userUpdateRecipes = {
+          username: this.props.currUser.username,
+          userKey: this.props.currUser.userKey,
+          following: this.props.currUser.following,
+          followers: this.props.currUser.followers,
+          recipes: newRecipes
+        }
+        axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)
+          .then(res => {
+            console.log(res.data)
+          });
+      });
+
+    this.setState({
+      description: "",
+      duration: 0,
+      instructions: '',
+      ingredients: []
+    })
   }
 
 
   onDrop(picture) {
     this.setState({
-        pictures: this.state.pictures.concat(picture),
+      pictures: this.state.pictures.concat(picture),
     });
-}
+  }
+
+  handleTab = (event) => {
+    if (event.keyCode === 9) {  // key clicked was tab
+      event.preventDefault();
+      let newInstructions = this.state.instructions;
+      newInstructions = newInstructions + "\t";
+      this.setState({
+        instructions: newInstructions
+      });
+    }
+  }
 
   render() {
     return (
 
-      <div class = "createR">
+      <div class="createR">
 
         <div>
           <br></br>
           <br></br>
         </div>
-            <div className = "createRecipe">
-      <h3>Post a new recipe!</h3>
-      <form onSubmit={this.onSubmit}>
-        <div className="form-group"> 
-          <label>Username: {this.props.userName}</label>
-        </div>
-        <div className="form-group"> 
-          <label>Description:</label>
-          <input  type="text"
-              required
-              className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+        <div className="createRecipe">
+          <h3>Post a new recipe!</h3>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label>Username: {this.props.userName}</label>
+            </div>
+            <div className="form-group">
+              <label>Description:</label>
+              <input type="text"
+                required
+                className="form-control"
+                value={this.state.description}
+                onChange={this.onChangeDescription}
               />
-        </div>
-        <div className="form-group">
-          <label>Ingredients (separate by commas): </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={this.state.ingredients}
-              onChange={this.onChangeIngredients}
+            </div>
+            <div className="form-group">
+              <label>Ingredients (separate by commas): </label>
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.ingredients}
+                onChange={this.onChangeIngredients}
               />
-        </div>
-        <div className="form-group">
-          <label>Instructions: </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={this.state.instructions}
-              onChange={this.onChangeInstructions}
+            </div>
+            <div className="form-group">
+              <label>Instructions: </label>
+              <textarea
+                className="form-control"
+                value={this.state.instructions}
+                onChange={this.onChangeInstructions}
+                onKeyDown={this.handleTab}
               />
-        </div>
-        <div className="form-group">
-          <label>Duration (in minutes): </label>
-          <input 
-              type="text" 
-              className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+            </div>
+            <div className="form-group">
+              <label>Duration (in minutes): </label>
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.duration}
+                onChange={this.onChangeDuration}
               />
-        </div>
+            </div>
 
-        <div className="process">
-            <p className="process__details">Upload an image!</p>
+            <div className="process">
+              <p className="process__details">Upload an image!</p>
 
-            <input type="file" className="process__upload-btn"  onChange={(e) => this.uploadImage(e, "multer")}  />
-            <img src={this.state.multerImage} alt="upload-image" className="process__image" />
-        </div>
-        {
-          console.log(this.state.pictures)
-        }
+              <input type="file" className="process__upload-btn" onChange={(e) => this.uploadImage(e, "multer")} />
+              <img src={this.state.multerImage} alt="upload-image" className="process__image" />
+            </div>
+            {
+              console.log(this.state.pictures)
+            }
 
-        <div className="form-group">
-          <label>Date: </label>
-          <div>
-            <DatePicker
-              selected={this.state.date}
-              onChange={this.onChangeDate}
-            />
-          </div>
-        </div>
+            <div className="form-group">
+              <label>Date: </label>
+              <div>
+                <DatePicker
+                  selected={this.state.date}
+                  onChange={this.onChangeDate}
+                />
+              </div>
+            </div>
 
-        <div className="form-group">
-          <input type="submit" value="Post my recipe!"  id="submitBtn" />
+            <div className="form-group">
+              <input type="submit" value="Post my recipe!" id="submitBtn" />
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
       </div>
 
     )
