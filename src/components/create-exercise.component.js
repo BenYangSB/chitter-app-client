@@ -251,8 +251,7 @@ export default class CreateExercise extends Component {
             </div>
             <div className="form-group">
               <label>Instructions: </label>
-              <input
-                type="text"
+              <textarea
                 className="form-control"
                 value={this.state.instructions}
                 onChange={this.onChangeInstructions}
