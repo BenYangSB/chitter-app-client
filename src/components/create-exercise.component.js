@@ -33,6 +33,22 @@ export default class CreateExercise extends Component {
 
   }
 
+  componentDidMount() {
+
+    axios.get('http://localhost:5000/users/')
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            users: response.data.map(user => user.username),
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+
   setDefaultImage(uploadType) {
     if (uploadType === "multer") {
       this.setState({
@@ -103,24 +119,6 @@ export default class CreateExercise extends Component {
       pictures: input
     })
   }
-  componentDidMount() {
-
-    //axios.get('https://chitterr-app-api.herokuapp.com/users/')
-
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
-  }
-
 
   onChangeIngredients(e) {
     this.setState({
@@ -187,16 +185,17 @@ export default class CreateExercise extends Component {
     axios.post('http://localhost:5000/exercises/add/', exercise)
       .then(res => {
         console.log(res.data)
-        recipeObjectId = res._id;   // this does not give u the object id (not working)
+        recipeObjectId = res.data;   // this does not give u the object id (not working)
 
-        const newRecipes = this.props.currUser.recipes ? this.props.currUser.recipes : [];
-        newRecipes.push(recipeObjectId);
+        const newSaved = this.props.currUser.saved ? this.props.currUser.saved : [];
+        newSaved.push(recipeObjectId);
         const userUpdateRecipes = {
           username: this.props.currUser.username,
           userKey: this.props.currUser.userKey,
           following: this.props.currUser.following,
           followers: this.props.currUser.followers,
-          saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
+          saved : newSaved
+          // saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
         }
         axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)
           .then(res => {
