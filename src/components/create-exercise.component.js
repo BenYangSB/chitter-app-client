@@ -216,6 +216,17 @@ export default class CreateExercise extends Component {
     });
   }
 
+  handleTab = (event) => {
+    if (event.keyCode === 9) {  // key clicked was tab
+      event.preventDefault();
+      let newInstructions = this.state.instructions;
+      newInstructions = newInstructions + "\t";
+      this.setState({
+        instructions: newInstructions
+      });
+    }
+  }
+
   render() {
     return (
 
@@ -255,6 +266,7 @@ export default class CreateExercise extends Component {
                 className="form-control"
                 value={this.state.instructions}
                 onChange={this.onChangeInstructions}
+                onKeyDown={this.handleTab}
               />
             </div>
             <div className="form-group">

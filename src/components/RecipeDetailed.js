@@ -23,10 +23,6 @@ const RecipeDetailed = (props) => {
     const deleteExercise = (id) => {
         axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
             .then(response => { console.log(response.data) });
-
-        this.setState({
-            exercises: this.state.exercises.filter(el => el._id !== id)
-        })
     };
 
     return (
@@ -45,7 +41,7 @@ const RecipeDetailed = (props) => {
                     {
                         (getCurrUserKey() == recipe.userKey && getCurrUserKey() != 'none') &&
                         <p className="editDelete detailedEditDelete">
-                            <Link to={"/edit/" + params.id}>&#9999;</Link> | <a href="#" onClick={() => { deleteExercise(recipe._id) }}>&#128465;</a>
+                            <Link to={"/edit/" + params.id}>&#9999;</Link> | <Link to='/feed'  onClick={() => { deleteExercise(recipe._id) }}><a href="#">&#128465;</a></Link>
                         </p>
                     }
                 </div>
