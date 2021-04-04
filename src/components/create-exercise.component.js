@@ -185,7 +185,7 @@ export default class CreateExercise extends Component {
     axios.post('http://localhost:5000/exercises/add/', exercise)
       .then(res => {
         console.log(res.data)
-        recipeObjectId = res.data;   // this does not give u the object id (not working)
+        recipeObjectId = res.data;   // this gives u the object id of the newExercise
 
         const newSaved = this.props.currUser.saved ? this.props.currUser.saved : [];
         newSaved.push(recipeObjectId);
