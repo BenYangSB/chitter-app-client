@@ -74,6 +74,7 @@ export default class CreateUser extends Component {
         userKey: input.userKey,
         following: input.following,
         followers: input.followers + 1,
+        recipes: input.recipes
       }
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => {

@@ -261,6 +261,9 @@ button:hover {
   /* align-items: center; */
   /* text-align: center; */
 }
+.ingredientsInput {
+  
+}
 #FEED{
   background-color: rgb(224, 224, 224);
 }
@@ -361,6 +364,7 @@ button:hover {
 .instructions {
   margin-left: 5%;
   font-size: 2rem;
+  white-space: pre-wrap; /* preserve whitespace in this div so newlines are displayed*/
 }
 .recipeDetImg {
   margin: auto;

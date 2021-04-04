@@ -13,7 +13,7 @@ import MyRecipies from "./components/MyRecipies";
 import LogIn from './components/LogIn'
 import CreateExercise from "./components/create-exercise.component";
 import axios from 'axios';
-import CreateUser from "./components/create-user.component";
+import DiscoverChefs from "./components/DiscoverUser";
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Img1 from "./assets/img1.jpeg"
@@ -39,7 +39,7 @@ class App extends React.Component {
       firebase.auth.EmailAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      signInSuccess: () => false
+      signInSuccessWithAuthResult: () => false
     }
   }
 
@@ -60,17 +60,17 @@ class App extends React.Component {
 
       const userAdd = {
         username: firebase.auth().currentUser.displayName,
-        userKey: firebase.auth().currentUser.uid,
-        following: [firebase.auth().currentUser.uid],
+        userKey: firebase.auth().currentUser.getIdToken(),
+        following: [firebase.auth().currentUser.getIdToken()],   // why does the user follow themselves ?
         followers: 0
       }
 
-      axios.post('https://chitterr-app-api.herokuapp.com/add', userAdd)
+      axios.post('http://localhost:5000/users/add', userAdd)
         .then(res => console.log(res.data));
 
 
       //get this user back
-      axios.get('https://chitterr-app-api.herokuapp.com/users/' + userAdd.userKey)
+      axios.get('http://localhost:5000/users/' + userAdd.userKey)
         .then(response => {
           if (response != null && response.data != null && response.data.length > 0) {
             this.setState({
@@ -81,6 +81,7 @@ class App extends React.Component {
         .catch((error) => {
           console.log(error);
         })
+
     })
   }
 
@@ -96,13 +97,13 @@ class App extends React.Component {
             <div>
               <Navbar isSignedIn={this.state.isSignedIn} userKey={firebase.auth().currentUser.uid} />
               <br />
-              <Route path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route exact path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/feed" exact component={() => <ExercisesList userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/user/recipies" component={() => <MyRecipies currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/user/trending" component={Trending} />
               <Route path="/edit/:id" component={EditExercise} />
               <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} userName={firebase.auth().currentUser.displayName} />} />
-              <Route path="/user/discover" component={() => <CreateUser userKey={firebase.auth().currentUser.uid} />} />
+              <Route path="/user/discover" component={() => <DiscoverChefs userKey={firebase.auth().currentUser.uid} />} />
               <Route path="/user/profile/:id" component={() => <UserProfile currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL} />} />
               <Route path="/recipe/:id" component={RecipeDetailed} />
               {/* </div> */}
