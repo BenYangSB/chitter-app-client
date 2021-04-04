@@ -58,6 +58,7 @@ class App extends React.Component {
         localStorage.setItem("currUserKey", 'none');
       }
 
+      console.log(firebase.auth().currentUser.uid)
       const userAdd = {
         username: firebase.auth().currentUser.displayName,
         userKey: firebase.auth().currentUser.uid,
@@ -66,12 +67,12 @@ class App extends React.Component {
         recipes : ["hello"]
       }
 
-      axios.post('https://localhost:5000/users/add/', userAdd)
+      axios.post('https://chitterr-app-api.herokuapp.com/users/add/', userAdd)
         .then(res => console.log(res.data));
 
 
       //get this user back
-      axios.get('https://localhost:5000/users/' + userAdd.userKey)
+      axios.get('https://chitterr-app-api.herokuapp.com/users/' + userAdd.userKey)
         .then(response => {
           if (response != null && response.data != null && response.data.length > 0) {
             this.setState({
