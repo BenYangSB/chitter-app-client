@@ -63,7 +63,7 @@ class App extends React.Component {
         username: firebase.auth().currentUser.displayName,
         userKey: firebase.auth().currentUser.uid,
         following: [firebase.auth().currentUser.uid],   // why does the user follow themselves ?
-        followers: 0,
+        followers: 1,
         recipes : ["hello"]
       }
 
