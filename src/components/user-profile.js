@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import LogIn from '../components/LogIn'
-import MyRecipies from '../components/MyRecipies'
+import Saved from '../components/savedPosts'
 export default class Trending extends Component {
   constructor(props) {
     super(props);
@@ -14,11 +14,11 @@ export default class Trending extends Component {
 
 
   componentDidMount = () => {
-    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
+    axios.get('http://localhost:5000/users/' + this.props.userKey)
       .then(response => {
-        if (response.data.length > 0) {
+        if (response.data.length >0 && response.data[0] != undefined) {
           this.setState({
-            user: response.data.map(user => user),
+            user: response.data[0],
           })
         }
       })
@@ -28,8 +28,11 @@ export default class Trending extends Component {
   }
 
   followList = () => {
-    return this.state.user[0].following.map(foll => {
 
+    if(this.state.user == undefined)
+      return;
+
+    return this.state.user.following.map(foll => {
       return <p>Following {foll}</p>;
     })
   }
@@ -43,11 +46,14 @@ export default class Trending extends Component {
 
           <div id="userProf">
             <div>
-              <p>Followers: {this.state.user[0].followers}, Following:   {this.state.user[0].following.length}</p>
+              <p>Followers: {this.state.user.followers}, Following:   {this.state.user.following.length}</p>
             </div>
             <div>
-            </div>
-            <MyRecipies currUser = {this.state.user[0]}></MyRecipies>
+            </div>{
+              this.state.user != null &&
+                <Saved currUser = {this.state.user}></Saved>
+
+            }
 
           </div>
 

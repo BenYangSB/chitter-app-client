@@ -83,7 +83,7 @@ export default class CreateExercise extends Component {
 
     console.log(this.state.multerImage)
 
-    axios.post('https://chitterr-app-api.herokuapp.com/image/uploadmulter', imageFormObj)
+    axios.post('http://localhost:5000/image/uploadmulter', imageFormObj)
       .then((data) => {
         console.log(data.data.Location)
         this.setState({
