@@ -11,7 +11,10 @@ export default class ExercisesList extends Component {
     this.deleteExercise = this.deleteExercise.bind(this)
     this.handleSave = this.handleSave.bind(this)
 
-    this.state = { exercises: [] };
+    this.state = {
+      exercises: [],
+      stateChange: 0  // incrememnt this to cause a state change and a rerender
+    };
   }
 
 
@@ -63,15 +66,15 @@ export default class ExercisesList extends Component {
   }
 
   handleSave(id) {
-      console.log(this.props.currUser.userKey);
-      console.log(id);
+    console.log(this.props.currUser.userKey);
+    console.log(id);
 
-      axios.get('http://localhost:5000/users/'+ this.props.currUser.userKey)
+    axios.get('http://localhost:5000/users/' + this.props.currUser.userKey)
       .then(response => {
         if (response.data.length > 0) {
           let userRes = response.data[0];
           let saved = (response.data[0].saved);
-          if(saved.includes(id)){
+          if (saved.includes(id)) {
             alert("already saved");
             return;
           }
@@ -88,9 +91,10 @@ export default class ExercisesList extends Component {
           console.log(newUser);
 
           axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
-          .then(res => {
-            alert("saved!")
-          });
+            .then(res => {
+              this.setState({ stateChange: this.state.stateChange + 1 });
+              alert("saved!")
+            });
         }
       })
       .catch((error) => {
@@ -99,6 +103,39 @@ export default class ExercisesList extends Component {
 
   }
 
+  unSave = (objectId) => {
+    axios.get('http://localhost:5000/users/' + this.props.currUser.userKey)
+      .then(response => {
+        if (response.data.length > 0) {
+          let userRes = response.data[0];
+          let saved = (response.data[0].saved);
+
+          for (let i = 0; i < saved.length; i++) {
+            if (saved[i] == objectId) {
+              saved.splice(i, 1);
+            }
+          }
+
+          let newUser = {
+            username: userRes.username,
+            userKey: this.props.currUser.userKey,
+            following: userRes.following,
+            followers: userRes.followers,
+            saved: saved,
+          }
+
+          console.log(newUser);
+
+          axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
+            .then(res => {
+              alert("unsaved!")
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
   deleteExercise(id) {
     axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
@@ -109,11 +146,34 @@ export default class ExercisesList extends Component {
     })
   }
 
+  isSaved = (id) => {
+    axios.get('http://localhost:5000/users/' + this.props.currentUserKey)
+      .then(response => {
+        let saved = response.data[0].saved;
+        if (saved.includes(id)) {
+          console.log("saved before")
+          return true;
+        }
+        else {
+          console.log("not saved")
+          return false;
+        }
+      })
+      .catch(err => console.log("Error: " + err));
+  }
+
   exerciseList() {
     return this.state.exercises.map(currentexercise => {
       if (currentexercise == undefined)
         return null;
-      return <Exercise handleSave = {this.handleSave} showMore = {true} display={true} ingList={this.ingList()} currUser={this.props.currUser} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+      let showUnSave = false;
+      let saved = this.props.currUser.saved;
+      for (let i = 0; i < saved.length; i++) {
+        if (saved[i] == currentexercise._id) {
+          showUnSave = true;
+        }
+      }
+      return <Exercise handleSave={this.handleSave} unSave={this.unSave} showUnSave={showUnSave} showMore={true} display={true} ingList={this.ingList()} currUser={this.props.currUser} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
     })
   }
 

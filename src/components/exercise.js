@@ -44,10 +44,12 @@ export default class Exercise extends Component {
                         {/* <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link> */}
                         <Link to={"/recipe/" + this.props.exercise._id}>&#10158;</Link>
                         {
-                            !this.props.dontShowBtn &&
-                            <button onClick = {()=>this.props.handleSave(this.props.exercise._id)} class = "saveBtn">&#x21e9;</button>
+                            !this.props.dontShowBtn && !this.props.showUnSave &&
+                            <button onClick={() => this.props.handleSave(this.props.exercise._id)} className="saveBtn">&#x21e9;</button>
 
                         }
+                        {this.props.showUnSave &&
+                            <button className="unSaveBtn" onClick={() => {this.props.unSave(this.props.exercise._id)}}>UnSave</button>}
                     </p>
                 }
 
