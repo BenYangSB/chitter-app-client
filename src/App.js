@@ -39,7 +39,7 @@ class App extends React.Component {
       firebase.auth.EmailAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      signInSuccess: () => false
+      signInSuccessWithAuthResult: () => false
     }
   }
 
@@ -96,7 +96,7 @@ class App extends React.Component {
             <div>
               <Navbar isSignedIn={this.state.isSignedIn} userKey={firebase.auth().currentUser.uid} />
               <br />
-              <Route path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route exact path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/feed" exact component={() => <ExercisesList userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/user/recipies" component={() => <MyRecipies currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
               <Route path="/user/trending" component={Trending} />
