@@ -77,7 +77,7 @@ class Saved extends Component {
         return this.state.displayedRecipes.map(currentexercise => {
             if (currentexercise == undefined || currentexercise == undefined)
                 return null;
-            return <Exercise showMore = {true} currUser = {this.props.currUser} ingList={this.ingList()} currentKey={this.props.userKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+            return <Exercise dontShowBtn = {true} showMore = {true} currUser = {this.props.currUser} ingList={this.ingList()} currentKey={this.props.userKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
         })
     };
 

@@ -43,7 +43,11 @@ export default class Exercise extends Component {
                     <p class="more">
                         {/* <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link> */}
                         <Link to={"/recipe/" + this.props.exercise._id}>&#10158;</Link>
-                        <button onClick = {()=>this.props.handleSave(this.props.exercise._id)} class = "saveBtn">&#x21e9;</button>
+                        {
+                            !this.props.dontShowBtn &&
+                            <button onClick = {()=>this.props.handleSave(this.props.exercise._id)} class = "saveBtn">&#x21e9;</button>
+
+                        }
                     </p>
                 }
 
