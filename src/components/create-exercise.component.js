@@ -104,7 +104,10 @@ export default class CreateExercise extends Component {
     })
   }
   componentDidMount() {
-    axios.get('https://chitterr-app-api.herokuapp.com/users/')
+
+    //axios.get('https://chitterr-app-api.herokuapp.com/users/')
+
+    axios.get('http://localhost:5000/users/')
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -193,7 +196,7 @@ export default class CreateExercise extends Component {
           userKey: this.props.currUser.userKey,
           following: this.props.currUser.following,
           followers: this.props.currUser.followers,
-          recipes: newRecipes
+          saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
         }
         axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)
           .then(res => {

@@ -9,9 +9,12 @@ export default class ExercisesList extends Component {
     super(props);
 
     this.deleteExercise = this.deleteExercise.bind(this)
+    this.handleSave = this.handleSave.bind(this)
 
     this.state = { exercises: [] };
   }
+
+
 
   componentDidMount() {
     // console.log(this.props.currUser);
@@ -59,6 +62,44 @@ export default class ExercisesList extends Component {
     })
   }
 
+  handleSave(id) {
+      console.log(this.props.currUser.userKey);
+      console.log(id);
+
+      axios.get('http://localhost:5000/users/'+ this.props.currUser.userKey)
+      .then(response => {
+        if (response.data.length > 0) {
+          let userRes = response.data[0];
+          let saved = (response.data[0].saved);
+          if(saved.includes(id)){
+            alert("already saved");
+            return;
+          }
+
+          saved.push(id);
+          let newUser = {
+            username: userRes.username,
+            userKey: this.props.currUser.userKey,
+            following: userRes.following,
+            followers: userRes.followers,
+            saved: saved,
+          }
+
+          console.log(newUser);
+
+          axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
+          .then(res => {
+            alert("saved!")
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+
+
   deleteExercise(id) {
     axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
       .then(response => { });
@@ -72,7 +113,7 @@ export default class ExercisesList extends Component {
     return this.state.exercises.map(currentexercise => {
       if (currentexercise == undefined)
         return null;
-      return <Exercise showMore = {true} display={true} ingList={this.ingList()} currUser={this.props.currUser} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
+      return <Exercise handleSave = {this.handleSave} showMore = {true} display={true} ingList={this.ingList()} currUser={this.props.currUser} currentKey={this.props.currentUserKey} exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />;
     })
   }
 

@@ -418,6 +418,12 @@ button:hover {
   vertical-align: middle;
 }
 
+.saveBtn{
+  background-color: transparent;
+  font-size: 80%;
+  float: right;
+}
+
 .landingImage{
   display: inline-block;
   background: url(assets/img2.jpeg), url(assets/img1.jpeg);

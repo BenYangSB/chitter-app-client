@@ -27,9 +27,7 @@ export default class Exercise extends Component {
 
                 <br></br>
 
-                { this.props.exercise.image != undefined &&
-                    console.log("https://chitterr-app-api.herokuapp.com/image/picture/" + this.props.exercise.image)
-                }
+
                 { this.props.exercise.image != undefined &&
                     <img className="awsImage" src={this.props.exercise.image} />
                 }
@@ -45,6 +43,7 @@ export default class Exercise extends Component {
                     <p class="more">
                         {/* <Link to={"/edit/" + this.props.exercise._id}>&#10158;</Link> */}
                         <Link to={"/recipe/" + this.props.exercise._id}>&#10158;</Link>
+                        <button onClick = {()=>this.props.handleSave(this.props.exercise._id)} class = "saveBtn">&#x21e9;</button>
                     </p>
                 }
 
