@@ -13,7 +13,7 @@ import MyRecipies from "./components/MyRecipies";
 import LogIn from './components/LogIn'
 import CreateExercise from "./components/create-exercise.component";
 import axios from 'axios';
-import DiscoverChefs from "./components/DiscoverUser";
+import DiscoverChefs from "./components/DiscoverChefs";
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Img1 from "./assets/img1.jpeg"
@@ -60,17 +60,18 @@ class App extends React.Component {
 
       const userAdd = {
         username: firebase.auth().currentUser.displayName,
-        userKey: firebase.auth().currentUser.getIdToken(),
-        following: [firebase.auth().currentUser.getIdToken()],   // why does the user follow themselves ?
-        followers: 0
+        userKey: firebase.auth().currentUser.uid,
+        following: [firebase.auth().currentUser.uid],   // why does the user follow themselves ?
+        followers: 0,
+        recipes : ["hello"]
       }
 
-      axios.post('http://localhost:5000/users/add', userAdd)
+      axios.post('https://localhost:5000/users/add/', userAdd)
         .then(res => console.log(res.data));
 
 
       //get this user back
-      axios.get('http://localhost:5000/users/' + userAdd.userKey)
+      axios.get('https://localhost:5000/users/' + userAdd.userKey)
         .then(response => {
           if (response != null && response.data != null && response.data.length > 0) {
             this.setState({
