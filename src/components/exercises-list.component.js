@@ -13,7 +13,8 @@ export default class ExercisesList extends Component {
 
     this.state = {
       exercises: [],
-      stateChange: 0  // incrememnt this to cause a state change and a rerender
+      currUser: this.props.currUser,
+      checkCurrUser: true  // incrememnt this to cause a state change and a rerender
     };
   }
 
@@ -21,7 +22,7 @@ export default class ExercisesList extends Component {
 
   componentDidMount() {
     // console.log(this.props.currUser);
-
+  
     let tempUser = {
       username: "henry chu",
       userKey: "4",
@@ -43,10 +44,10 @@ export default class ExercisesList extends Component {
           let temp = this.state.exercises;
 
           response.data.forEach(element => {
-            console.log(element);
+            // console.log(element);
             temp.push(element);
           });
-          console.log("temp: " + temp[0]);
+          // console.log("temp: " + temp[0]);
           this.setState({ exercises: temp })
         })
         .catch((error) => {
@@ -63,6 +64,20 @@ export default class ExercisesList extends Component {
     ingredients.map(ing => {
       return <li>{ing}</li>
     })
+  }
+
+  updateCurrUser = () => {
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.currentUserKey)
+      .then(response => {
+        if (response != null && response.data != null && response.data.length > 0)
+
+          this.setState({
+            currUser: response.data[0],
+            checkCurrUser: false
+          });
+        setTimeout(this.setState({ checkCurrUser: true }), 1000);
+      })
+      .catch(err => console.log("Error: " + err));
   }
 
   handleSave(id) {
@@ -92,8 +107,8 @@ export default class ExercisesList extends Component {
 
           axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
             .then(res => {
-              this.setState({ stateChange: this.state.stateChange + 1 });
-              alert("saved!")
+              this.updateCurrUser();
+              // alert("saved!")
             });
         }
       })
@@ -128,7 +143,8 @@ export default class ExercisesList extends Component {
 
           axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
             .then(res => {
-              alert("unsaved!")
+              this.updateCurrUser();
+              // alert("unsaved!")
             });
         }
       })
@@ -167,7 +183,7 @@ export default class ExercisesList extends Component {
       if (currentexercise == undefined)
         return null;
       let showUnSave = false;
-      let saved = this.props.currUser.saved;
+      let saved = this.state.currUser.saved;
       for (let i = 0; i < saved.length; i++) {
         if (saved[i] == currentexercise._id) {
           showUnSave = true;
