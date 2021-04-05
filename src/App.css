@@ -61,6 +61,9 @@
 
 body {
   background-image: url(assets/12.jpeg);
+  background-repeat: repeat;
+  background-attachment: fixed;
+  overflow-x: hidden;
   /* background-color: white; */
   /* color : white; */
 }
@@ -126,6 +129,7 @@ a:hover {
 .process__image{
   height: 20%;
   width: 20%;
+  border-radius: 25px;
 }
 
 .feed-title{
@@ -146,20 +150,20 @@ a:hover {
 }
 
 .followOthers{
-  background: url(assets/12.jpeg);
+  /* background: url(assets/12.jpeg); */
   color: #000000;
 }
 
 .feedWrap{
   color: rgb(0, 0, 0);
-  background: url(assets/12.jpeg);
+  /* background: url(assets/12.jpeg); */
 }
 
 .createR{
   width: 100vw;
   color: rgb(255, 255, 255);
   height: 100vh;
-  background: url(assets/12.jpeg);
+  /* background: url(assets/12.jpeg); */
   
 }
 

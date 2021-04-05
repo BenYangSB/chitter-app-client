@@ -84,7 +84,7 @@ class Saved extends Component {
 
     render() {
         return (
-            <div class="myRecipes">
+            <div className="myRecipes">
                 <div className="feed-title">Saved Recipes</div>
                 {
                     console.log(this.state.displayedRecipes)
