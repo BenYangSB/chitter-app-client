@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Exercise from './exercise';
 import axios from 'axios';
+import BlueLoadingBar from '../assets/BlueLoadingBar.svg';
 
 
 export default class ExercisesList extends Component {
@@ -14,7 +15,7 @@ export default class ExercisesList extends Component {
     this.state = {
       exercises: [],
       currUser: this.props.currUser,
-      checkCurrUser: true  // incrememnt this to cause a state change and a rerender
+      loading: true
     };
   }
 
@@ -30,9 +31,41 @@ export default class ExercisesList extends Component {
       followers: 0
     }
 
+    this.readFollowersPosts();
+    // let following = [];
+    // if (this.state.currUser != null && this.state.currUser != undefined) {
+    //   following = this.state.currUser.following;
+    // }
+    // // console.log(following)
+
+
+    // following.forEach(followingUserKey => {
+    //   axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
+    //     .then(response => {
+    //       // console.log(response);
+    //       let temp = this.state.exercises;
+
+    //       response.data.forEach(element => {
+    //         // console.log(element);
+    //         temp.push(element);
+    //       });
+    //       // console.log("temp: " + temp[0]);
+    //       this.setState({ 
+    //         exercises: temp,
+    //         loading: false 
+    //       })
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     })
+    // });
+
+  }
+
+  readFollowersPosts = () => {
     let following = [];
-    if (this.props.currUser != null && this.props.currUser != undefined) {
-      following = this.props.currUser.following;
+    if (this.state.currUser != null && this.state.currUser != undefined) {
+      following = this.state.currUser.following;
     }
     // console.log(following)
 
@@ -48,13 +81,15 @@ export default class ExercisesList extends Component {
             temp.push(element);
           });
           // console.log("temp: " + temp[0]);
-          this.setState({ exercises: temp })
+          this.setState({ 
+            exercises: temp,
+            loading: false 
+          })
         })
         .catch((error) => {
           console.log(error);
         })
     });
-
   }
 
   ingList(ingredients) {
@@ -73,9 +108,7 @@ export default class ExercisesList extends Component {
 
           this.setState({
             currUser: response.data[0],
-            checkCurrUser: false
           });
-        setTimeout(this.setState({ checkCurrUser: true }), 1000);
       })
       .catch(err => console.log("Error: " + err));
   }
@@ -155,7 +188,7 @@ export default class ExercisesList extends Component {
 
   deleteExercise(id) {
     axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
-      .then(response => { });
+      .then(response => {this.readFollowersPosts()});
 
     this.setState({
       exercises: this.state.exercises.filter(el => el._id !== id)
@@ -167,11 +200,11 @@ export default class ExercisesList extends Component {
       .then(response => {
         let saved = response.data[0].saved;
         if (saved.includes(id)) {
-          console.log("saved before")
+          // console.log("saved before")
           return true;
         }
         else {
-          console.log("not saved")
+          // console.log("not saved")
           return false;
         }
       })
@@ -182,6 +215,7 @@ export default class ExercisesList extends Component {
     return this.state.exercises.map(currentexercise => {
       if (currentexercise == undefined)
         return null;
+      // check if saved state
       let showUnSave = false;
       let saved = this.state.currUser.saved;
       for (let i = 0; i < saved.length; i++) {
@@ -201,6 +235,12 @@ export default class ExercisesList extends Component {
 
           <div className="feed-total">
             {/* {console.log(this.props.currUser.following)} */}
+            {this.state.loading && 
+              <img className="loadingBar" src={BlueLoadingBar}/>
+            }
+            {!this.state.loading && this.state.exercises.length == 0 &&
+              <div className="emptyMsg">No Followers or personal recipes yet!</div>
+            }
             {this.exerciseList()}
           </div>
         </div>

@@ -164,7 +164,7 @@ export default class CreateExercise extends Component {
 
     this.uploadImage(e, "multer");
 
-    var temp = this.state.ingredients.split(",");
+    var temp = (this.state.ingredients != undefined && this.state.ingredients != null && this.state.ingredients != "") ? this.state.ingredients.split(",") : [];
 
     const exercise = {
       username: this.props.userName,
@@ -194,7 +194,7 @@ export default class CreateExercise extends Component {
           userKey: this.props.currUser.userKey,
           following: this.props.currUser.following,
           followers: this.props.currUser.followers,
-          saved : newSaved
+          saved: newSaved
           // saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
         }
         axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)

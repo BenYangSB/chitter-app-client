@@ -185,6 +185,14 @@ a:hover {
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+.emptyMsg {
+  font-size: 2rem;
+  font-weight : 500;
+  display: flex;
+  align-self: center;
+  margin-top: 20vh;
+  text-shadow: 4px 2px 5px black;
+}
 
 #submitBtn {
   margin: auto;

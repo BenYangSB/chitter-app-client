@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Exercise from './exercise';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import BlueLoadingBar from '../assets/BlueLoadingBar.svg';
 
 class MyRecipies extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            exercises: []
+            exercises: [],
+            loading: true
         }
     }
 
@@ -28,7 +30,10 @@ class MyRecipies extends Component {
                         newExercises.push(exercise);
                     });
 
-                    this.setState({ exercises: newExercises });
+                    this.setState({ 
+                        exercises: newExercises,
+                        loading : false
+                     });
                 })
                 .catch((error) => {
                     console.log(error)
@@ -68,6 +73,12 @@ class MyRecipies extends Component {
             <div class="myRecipes">
                 <div className="feed-title">My Recipes</div>
                 <div className="feed-total">
+                    {this.state.loading &&
+                        <img className="loadingBar" src={BlueLoadingBar}/>
+                    }
+                    {!this.state.loading && this.state.exercises.length == 0 &&
+                        <div className="emptyMsg">No recipes yet! Add some recipes!</div>
+                    }
                     {this.exerciseList()}
                 </div>
             </div>
