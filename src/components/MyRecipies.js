@@ -31,9 +31,9 @@ class MyRecipies extends Component {
                     });
 
                     this.setState({ 
-                        exercises: newExercises,
-                        loading : false
+                        exercises: newExercises
                      });
+                     setTimeout(() => {this.setState({loading : false})}, 50);
                 })
                 .catch((error) => {
                     console.log(error)

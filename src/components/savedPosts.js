@@ -70,9 +70,9 @@ class Saved extends Component {
 
                                     temp.push(response.data)
                                     this.setState({
-                                        displayedRecipes: temp,
-                                        loading : false
+                                        displayedRecipes: temp
                                     })
+                                    setTimeout(() => {this.setState({loading : false})}, 100);
                                     // console.log(this.state.displayedRecipes)
                                 })
                                 .catch((error) => {
@@ -136,7 +136,7 @@ class Saved extends Component {
                 }
                 <div className="feed-total">
                     {this.state.loading && <img className="loadingBar" src={BlueLoadingBar}/>}
-                    {this.state.loading && this.state.displayedRecipes.length == 0 &&
+                    {!this.state.loading && this.state.displayedRecipes.length == 0 &&
                         <div className="emptyMsg">No saved posts yet!</div>
                     }
                     {this.exerciseList()}
