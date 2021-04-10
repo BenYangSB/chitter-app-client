@@ -219,6 +219,10 @@ button:hover {
   filter: brightness(90%);
 }
 
+input {
+  outline : none;
+}
+
 
 .homepage{
   height: 100vh;

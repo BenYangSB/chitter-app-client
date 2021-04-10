@@ -82,9 +82,9 @@ export default class ExercisesList extends Component {
           });
           // console.log("temp: " + temp[0]);
           this.setState({ 
-            exercises: temp,
-            loading: false 
+            exercises: temp
           })
+          setTimeout(() => {this.setState({loading : false})}, 50)
         })
         .catch((error) => {
           console.log(error);
