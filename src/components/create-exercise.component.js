@@ -17,6 +17,7 @@ export default class CreateExercise extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.setImages = this.setImages.bind(this);
 
+    this.textAreaRef = React.createRef();
     this.state = {
       ingredients: '',
       description: '',
@@ -152,13 +153,23 @@ export default class CreateExercise extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    let error = false;
+    let errorMsg = "";
     if (this.state.imgdata == undefined || this.state.imgdata == null) {
-      alert("please include an image");
-      return;
+      // alert("please include an image");
+      // return;
+      errorMsg = errorMsg +"Please include an image."
+      error = true;
     }
 
     if (this.state.instructions == '') {
-      alert("please include instructions");
+      // alert("please include instructions");
+      // return;
+      errorMsg = errorMsg + "Please include instructions."
+      error = true;
+    }
+    if (error) {
+      alert(errorMsg);
       return;
     }
 
@@ -219,13 +230,29 @@ export default class CreateExercise extends Component {
   }
 
   handleTab = (event) => {
-    if (event.keyCode === 9) {  // key clicked was tab
+    if (event.key === 'Tab' && !event.shiftKey) {  // key clicked was tab
       event.preventDefault();
-      let newInstructions = this.state.instructions;
-      newInstructions = newInstructions + "\t";
-      this.setState({
-        instructions: newInstructions
-      });
+      
+      document.execCommand('insertText', false, "\t");
+      
+      return false;
+
+      // kinda works
+      // const { selectionStart, selectionEnd } = event.target;  // get cursor position
+
+      // let newInstructions = this.state.instructions;
+      // newInstructions = newInstructions + "";
+      // this.setState(prevState => ({
+      //   instructions: prevState.instructions.substring(0, selectionStart) + "\t" + prevState.instructions.substring(selectionEnd)
+      // }),
+        // update the cursor position after adding the tab (doesn't work)
+        // () => {
+          // if (this.textAreaRef.current )
+          //   this.textAreaRef.current.selectionStart =  selectionStart + 1;
+          // if (this.textAreaRef.current)
+          //   this.textAreaRef.current.selectionEnd = selectionStart + 1;
+        // }
+        // );
     }
   }
 
@@ -257,6 +284,7 @@ export default class CreateExercise extends Component {
               <label>Ingredients (separate by commas): </label>
               <input
                 type="text"
+                required
                 className="form-control"
                 value={this.state.ingredients}
                 onChange={this.onChangeIngredients}
@@ -265,6 +293,7 @@ export default class CreateExercise extends Component {
             <div className="form-group">
               <label>Instructions: </label>
               <textarea
+                required
                 className="form-control"
                 value={this.state.instructions}
                 onChange={this.onChangeInstructions}
@@ -284,7 +313,7 @@ export default class CreateExercise extends Component {
             <div className="process">
               <p className="process__details">Upload an image!</p>
 
-              <input type="file" className="process__upload-btn" onChange={(e) => this.uploadImage(e, "multer")} />
+              <input type="file" required className="process__upload-btn" onChange={(e) => this.uploadImage(e, "multer")} />
               <img src={this.state.multerImage} alt="upload-image" className="process__image" />
             </div>
             {
