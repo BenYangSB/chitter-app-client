@@ -3,12 +3,14 @@ import List from './Lst';
 import { getCurrUserKey } from './localStorageFunctions';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import StarRatingComponent from 'react-star-rating-component';
 
 
 const RecipeDetailed = (props) => {
 
     const params = useParams(); // used to get the id from the url
     const [recipe, setRecipe] = useState(null);
+    const [rating, setRating] = useState(1);
 
     useEffect(() => {
         console.log(params.id)
@@ -24,6 +26,11 @@ const RecipeDetailed = (props) => {
         axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
             .then(response => { console.log(response.data) });
     };
+
+    const onStarClick = (nextValue, prevValue, name) => {
+        console.log("HERE");
+        setRating(nextValue);
+    }
 
     return (
         <div className="recipeDetailedContainer">
@@ -44,8 +51,23 @@ const RecipeDetailed = (props) => {
                             <Link to={"/edit/" + params.id}>&#9999;</Link> | <Link to='/feed'  onClick={() => { deleteExercise(recipe._id) }}><a href="#">&#128465;</a></Link>
                         </p>
                     }
+
+
+
+                <div>
+                    <h2>Your Rating: {rating}</h2>
+                    <StarRatingComponent 
+                    name="rate1" 
+                    starCount={10}
+                    value={rating}
+                    onStarClick={onStarClick}
+                    />
+                </div>
                 </div>
             }
+
+
+
             <div className="space"></div>
         </div>
     );

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Lst from './Lst';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import StarRatingComponent from 'react-star-rating-component';
+
 
 
 
@@ -10,11 +12,18 @@ export default class Exercise extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { image: null };
+        this.state = { image: null, rating: 1 };
     }
 
 
+    onStarClick(nextValue, prevValue, name) {
+        this.setState({rating: nextValue});
+    }
+
+
+
     render() {
+        const { rating } = this.state;
         return (
             <div className="card" id="recipe">
 
@@ -53,6 +62,8 @@ export default class Exercise extends Component {
                             </button>}
                     </p>
                 }
+
+
 
             </div>
         );
