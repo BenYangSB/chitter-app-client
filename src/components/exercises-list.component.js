@@ -188,11 +188,13 @@ export default class ExercisesList extends Component {
 
   deleteExercise(id) {
     axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
-      .then(response => {this.readFollowersPosts()});
+      .then(response => {
+        this.readFollowersPosts();
+        this.setState({
+          exercises: this.state.exercises.filter(el => el._id !== id)
+        })
+      });
 
-    this.setState({
-      exercises: this.state.exercises.filter(el => el._id !== id)
-    })
   }
 
   isSaved = (id) => {
