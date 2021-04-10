@@ -49,7 +49,8 @@ export default class Exercise extends Component {
 
                         }
                         {this.props.showUnSave &&
-                            <button className="unSaveBtn" onClick={() => {this.props.unSave(this.props.exercise._id)}}>UnSave</button>}
+                            <button class="unSaveBtn" onClick={() => {this.props.unSave(this.props.exercise._id)}}>&#10683;
+                            </button>}
                     </p>
                 }
 
