@@ -186,6 +186,8 @@ export default class CreateExercise extends Component {
       ingredients: temp,
       image: this.state.imgdata,
       instructions: this.state.instructions,
+      totalRating: 0,
+      numRatings: 0,
     }
 
     console.log(exercise);

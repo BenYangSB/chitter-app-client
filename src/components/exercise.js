@@ -25,10 +25,19 @@ export default class Exercise extends Component {
     render() {
         const { rating } = this.state;
         return (
+
+            
             <div className="card" id="recipe">
 
+                {console.log(this.props.exercise.numRatings)}
                 <h className="recipePoster">{this.props.exercise.username}</h>
                 <h className="recipeTitle">{this.props.exercise.description}</h>
+
+                    {
+                        this.props.exercise.numRatings == 0 ? <div>No ratings yet!</div> :
+                        <div>{(this.props.exercise.totalRating/this.props.exercise.numRatings).toFixed(1)} &#11088;
+                        </div>
+                    }
 
                 <p className="recipeTime">Time to make : {this.props.exercise.duration} minutes</p>
                 <img src=""></img>

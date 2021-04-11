@@ -23,7 +23,7 @@ const RecipeDetailed = (props) => {
     }, []);
 
     const deleteExercise = (id) => {
-        axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
+        axios.delete('http://localhost:5000/exercises/' + id)
             .then(response => { console.log(response.data) });
     };
 
@@ -32,12 +32,28 @@ const RecipeDetailed = (props) => {
         setRating(nextValue);
     }
 
+    const onButtonClick = () => {
+        console.log("Posting rating!")
+        let updatedRec = recipe;
+        updatedRec.numRatings = updatedRec.numRatings == undefined ? 1 : updatedRec.numRatings + 1;
+        updatedRec.totalRating = updatedRec.totalRating == undefined ? 1 : updatedRec.totalRating +rating;
+
+        axios.post('http://localhost:5000/exercises/update/' + recipe._id, updatedRec)
+        .then(response => { console.log(response.data) });
+    }
+
     return (
         <div className="recipeDetailedContainer">
             <div className="space"></div>
             {recipe != null &&
                 <div className="recipeDetailedCard">
                     <div className='recipeTitleDetailed'>{recipe.description}</div>
+                    {
+                        recipe.numRatings == 0 ? <div>No ratings yet!</div> :
+                        <div>Rating from {recipe.numRatings} users : {(recipe.totalRating/recipe.numRatings).toFixed(1)} &#11088;
+                        </div>
+                    }
+                    
                     <div className="recipePosterDetailed">{recipe.username}</div>
                     <p className="recipeTime">Time to make : {recipe.duration} minutes</p>
                     <div className="recipeDetIngredients"><List ingList={recipe.ingredients} /></div>
@@ -62,6 +78,8 @@ const RecipeDetailed = (props) => {
                     value={rating}
                     onStarClick={onStarClick}
                     />
+
+                    <button onClick = {onButtonClick}>Rate!</button>
                 </div>
                 </div>
             }

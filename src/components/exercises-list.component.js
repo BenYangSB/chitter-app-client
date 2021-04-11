@@ -22,44 +22,8 @@ export default class ExercisesList extends Component {
 
 
   componentDidMount() {
-    // console.log(this.props.currUser);
   
-    let tempUser = {
-      username: "henry chu",
-      userKey: "4",
-      following: ["1", "xstGsReFpIOkeu46CxbBlaE9skr1", "4"],
-      followers: 0
-    }
-
     this.readFollowersPosts();
-    // let following = [];
-    // if (this.state.currUser != null && this.state.currUser != undefined) {
-    //   following = this.state.currUser.following;
-    // }
-    // // console.log(following)
-
-
-    // following.forEach(followingUserKey => {
-    //   axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
-    //     .then(response => {
-    //       // console.log(response);
-    //       let temp = this.state.exercises;
-
-    //       response.data.forEach(element => {
-    //         // console.log(element);
-    //         temp.push(element);
-    //       });
-    //       // console.log("temp: " + temp[0]);
-    //       this.setState({ 
-    //         exercises: temp,
-    //         loading: false 
-    //       })
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    // });
-
   }
 
   readFollowersPosts = () => {
@@ -71,7 +35,7 @@ export default class ExercisesList extends Component {
 
 
     following.forEach(followingUserKey => {
-      axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
+      axios.get('http://localhost:5000/exercises/feed/' + followingUserKey)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
