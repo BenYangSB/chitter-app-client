@@ -99,14 +99,14 @@ class App extends React.Component {
             <div>
               <Navbar isSignedIn={this.state.isSignedIn} userKey={firebase.auth().currentUser.uid} />
               <br />
-              <Route exact path="/" exact component={() => <Landing userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
-              <Route path="/feed" exact component={() => <ExercisesList userKey={firebase.auth().currentUser.uid} currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
-              <Route path="/user/recipies" component={() => <MyRecipies currUser={this.state.currentUser} currentUserKey={firebase.auth().currentUser.uid} />} />
+              <Route exact path="/" exact component={() => <Landing currUser={this.state.currentUser}/>} />
+              <Route path="/feed" exact component={() => <ExercisesList currUser={this.state.currentUser}/>} />
+              <Route path="/user/recipies" component={() => <MyRecipies currUser={this.state.currentUser}/>} />
               <Route path="/user/trending" component={Trending} />
-              <Route path="/edit/:id" component={(props) => <EditExercise {...props} currUser={this.state.currentUser} username={firebase.auth().currentUser.displayName} userKey={firebase.auth().currentUser.uid}/>} />
-              <Route path="/create" component={() => <CreateExercise userKey={firebase.auth().currentUser.uid} username={firebase.auth().currentUser.displayName} currUser={this.state.currentUser}/>} />
-              <Route path="/user/discover" component={() => <DiscoverChefs userKey={firebase.auth().currentUser.uid} />} />
-              <Route path="/user/profile/:id" component={(props) => <UserProfile {...props} currUser={this.state.currentUser} userKey={firebase.auth().currentUser.uid} signOut={firebase.auth().signOut} displayName={firebase.auth().currentUser.displayName} profilePic={firebase.auth().currentUser.photoURL} />} />
+              <Route path="/edit/:id" component={(props) => <EditExercise {...props} currUser={this.state.currentUser}/>} />
+              <Route path="/create" component={() => <CreateExercise currUser={this.state.currentUser}/>} />
+              <Route path="/user/discover" component={() => <DiscoverChefs/>} />
+              <Route path="/user/profile/:id" component={(props) => <UserProfile {...props} currUser={this.state.currentUser} />} />
               <Route path="/recipe/:id" component={(props) => <RecipeDetailed {...props} />} />
               {/* </div> */}
 

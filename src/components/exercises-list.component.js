@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Exercise from './exercise';
 import axios from 'axios';
 import BlueLoadingBar from '../assets/BlueLoadingBar.svg';
+import firebase from 'firebase'
 
 
 export default class ExercisesList extends Component {
@@ -12,9 +13,11 @@ export default class ExercisesList extends Component {
     this.deleteExercise = this.deleteExercise.bind(this)
     this.handleSave = this.handleSave.bind(this)
 
+    let currentUser = firebase.auth().currentUser;
     this.state = {
       exercises: [],
       currUser: this.props.currUser,
+      userKey : currentUser.uid,
       loading: true
     };
   }
@@ -102,7 +105,7 @@ export default class ExercisesList extends Component {
   }
 
   updateCurrUser = () => {
-    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.currentUserKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.state.userKey)
       .then(response => {
         if (response != null && response.data != null && response.data.length > 0)
 
@@ -198,7 +201,7 @@ export default class ExercisesList extends Component {
   }
 
   isSaved = (id) => {
-    axios.get('http://localhost:5000/users/' + this.props.currentUserKey)
+    axios.get('http://localhost:5000/users/' + this.state.userKey)
       .then(response => {
         let saved = response.data[0].saved;
         if (saved.includes(id)) {

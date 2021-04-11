@@ -3,12 +3,14 @@ import axios from 'axios';
 import LogIn from '../components/LogIn'
 import MyRecipies from '../components/MyRecipies'
 import firebase from 'firebase'
+
 export default class Landing extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       user: null,
+      userKey : firebase.auth().currentUser.uid
     }
 
   }
