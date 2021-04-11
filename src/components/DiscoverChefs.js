@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import PROF from '../assets/sss.png'
+import PROF from '../assets/sss.png';
+import firebase from 'firebase';
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -12,14 +13,15 @@ export default class CreateUser extends Component {
 
     this.state = {
       users: [],
-      currentUser: null
+      currentUser: null,
+      userKey : firebase.auth().currentUser.uid
     }
   }
 
   componentDidMount() {
     this.readUsers();
-    console.log(this.props.userKey)
-    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.userKey)
+    // console.log(this.props.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.state.userKey)
       .then(response => {
         if (response.data != null && response.data.length > 0) {
           this.setState({

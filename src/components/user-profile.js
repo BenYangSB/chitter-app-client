@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import LogIn from '../components/LogIn'
 import Saved from '../components/savedPosts'
+import firebase from 'firebase'
+
 export default class Trending extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,7 @@ export default class Trending extends Component {
 
 
   componentDidMount = () => {
-    axios.get('http://localhost:5000/users/' + this.props.userKey)
+    axios.get('http://localhost:5000/users/' + this.props.match.params.id)
       .then(response => {
         if (response.data.length >0 && response.data[0] != undefined) {
           this.setState({
