@@ -66,7 +66,8 @@ export default class CreateUser extends Component {
         userKey: this.state.currentUser.userKey,
         following: temp,
         followers: this.state.currentUser.followers,
-        recipes : input.recipes
+        recipes : input.recipes,
+        saved: this.state.currentUser.saved
       }
 
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.state.currentUser._id, userUpdatedFollow)
@@ -77,7 +78,8 @@ export default class CreateUser extends Component {
         userKey: input.userKey,
         following: input.following,
         followers: input.followers + 1,
-        recipes: input.recipes
+        recipes: input.recipes,
+        saved: input.saved
       }
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => {
@@ -120,7 +122,7 @@ export default class CreateUser extends Component {
         userKey: input.userKey,
         following: input.following,
         followers: input.followers - 1,
-        saved: input.saved,
+        saved: input.saved
       }
       axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + input._id, userUpdatedFollowers)
         .then(res => {
