@@ -23,7 +23,7 @@ class MyRecipies extends Component {
             //use this after backend is deployed
             // axios.get('https://chitterr-app-api.herokuapp.com/exercises/myRecipes/' + this.props.userKey)
 
-            axios.get('http://localhost:5000/exercises/myRecipes/' + this.props.currUser.userKey)
+            axios.get('https://chitterr-app-api.herokuapp.com/exercises/myRecipes/' + this.props.currUser.userKey)
                 .then(response => {
                     let newExercises = this.state.exercises;
                     console.log(response);

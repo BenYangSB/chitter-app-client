@@ -19,43 +19,12 @@ class Saved extends Component {
 
     componentDidMount = () => {
         this.reReadEverythingFromDatabase();
-        // if (this.state.currUser != null || this.state.currUser != undefined) {
-
-        //     axios.get('http://localhost:5000/users/' + this.state.currUser.userKey)
-        //         .then(response => {
-        //             if (response.data.length > 0) {
-        //                 this.setState({
-        //                     savedRecipes: response.data[0].saved,
-        //                     currUser : response.data[0]
-        //                 })
-
-        //                 this.state.savedRecipes.map((recipeId) => {
-        //                     axios.get('http://localhost:5000/exercises/' + recipeId)
-        //                         .then(response => {
-        //                             let temp = this.state.displayedRecipes;
-
-        //                             temp.push(response.data)
-        //                             this.setState({
-        //                                 displayedRecipes: temp
-        //                             })
-        //                             // console.log(this.state.displayedRecipes)
-        //                         })
-        //                         .catch((error) => {
-        //                             console.log(error);
-        //                         })
-        //                 })
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         })
-        // }
     };
 
     reReadEverythingFromDatabase = () => {
         if (this.state.currUser != null || this.state.currUser != undefined) {
 
-            axios.get('http://localhost:5000/users/' + this.state.currUser.userKey)
+            axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.state.currUser.userKey)
                 .then(response => {
                     if (response && response.data && response.data.length > 0) {
                         this.setState({
@@ -64,7 +33,7 @@ class Saved extends Component {
                         })
 
                         this.state.savedRecipes.map((recipeId) => {
-                            axios.get('http://localhost:5000/exercises/' + recipeId)
+                            axios.get('https://chitterr-app-api.herokuapp.com/exercises/' + recipeId)
                                 .then(response => {
                                     let temp = this.state.displayedRecipes;
 
@@ -88,7 +57,7 @@ class Saved extends Component {
     }
 
     updateCurrUser = () => {
-        axios.get('http://localhost:5000/users/' + this.state.currUser.userKey)
+        axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.state.currUser.userKey)
             .then(response => {
                 if (response != null && response.data != null && response.data.length > 0) {
                     this.setState({ currUser: response.data[0] });

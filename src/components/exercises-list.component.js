@@ -38,7 +38,7 @@ export default class ExercisesList extends Component {
 
 
     following.forEach(followingUserKey => {
-      axios.get('http://localhost:5000/exercises/feed/' + followingUserKey)
+      axios.get('https://chitterr-app-api.herokuapp.com/exercises/feed/' + followingUserKey)
         .then(response => {
           // console.log(response);
           let temp = this.state.exercises;
@@ -84,7 +84,7 @@ export default class ExercisesList extends Component {
     console.log(this.props.currUser.userKey);
     console.log(id);
 
-    axios.get('http://localhost:5000/users/' + this.props.currUser.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.currUser.userKey)
       .then(response => {
         if (response.data.length > 0) {
           let userRes = response.data[0];
@@ -105,7 +105,7 @@ export default class ExercisesList extends Component {
 
           console.log(newUser);
 
-          axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
+          axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.props.currUser._id, newUser)
             .then(res => {
               this.updateCurrUser();
               // alert("saved!")
@@ -119,7 +119,7 @@ export default class ExercisesList extends Component {
   }
 
   unSave = (objectId) => {
-    axios.get('http://localhost:5000/users/' + this.props.currUser.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.currUser.userKey)
       .then(response => {
         if (response.data.length > 0) {
           let userRes = response.data[0];
@@ -141,7 +141,7 @@ export default class ExercisesList extends Component {
 
           console.log(newUser);
 
-          axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, newUser)
+          axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.props.currUser._id, newUser)
             .then(res => {
               this.updateCurrUser();
               // alert("unsaved!")
@@ -165,7 +165,7 @@ export default class ExercisesList extends Component {
   }
 
   isSaved = (id) => {
-    axios.get('http://localhost:5000/users/' + this.state.userKey)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.state.userKey)
       .then(response => {
         let saved = response.data[0].saved;
         if (saved.includes(id)) {

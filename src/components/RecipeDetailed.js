@@ -14,7 +14,7 @@ const RecipeDetailed = (props) => {
 
     useEffect(() => {
         console.log(params.id)
-        axios.get('http://localhost:5000/exercises/' + params.id)
+        axios.get('https://chitterr-app-api.herokuapp.com/exercises/' + params.id)
             .then(response => {
                 console.log(response.data)
                 setRecipe(response.data);
@@ -23,7 +23,7 @@ const RecipeDetailed = (props) => {
     }, []);
 
     const deleteExercise = (id) => {
-        axios.delete('http://localhost:5000/exercises/' + id)
+        axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
             .then(response => { console.log(response.data) });
     };
 
@@ -38,7 +38,7 @@ const RecipeDetailed = (props) => {
         updatedRec.numRatings = updatedRec.numRatings == undefined ? 1 : updatedRec.numRatings + 1;
         updatedRec.totalRating = updatedRec.totalRating == undefined ? 1 : updatedRec.totalRating +rating;
 
-        axios.post('http://localhost:5000/exercises/update/' + recipe._id, updatedRec)
+        axios.post('https://chitterr-app-api.herokuapp.com/exercises/update/' + recipe._id, updatedRec)
         .then(response => { console.log(response.data) });
     }
 

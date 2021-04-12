@@ -32,18 +32,6 @@ class editRecipeForm extends Component {
     }
     componentDidMount() {
 
-        // don't need this i think
-        // axios.get('http://localhost:5000/users/')
-        //     .then(response => {
-        //         if (response.data.length > 0) {
-        //             this.setState({
-        //                 users: response.data.map(user => user.username),
-        //             })
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     })
         if (this.props.isEdit) {
             axios.get('https://chitterr-app-api.herokuapp.com/exercises/' + this.props.match.params.id)
                 .then(response => {
@@ -118,7 +106,7 @@ class editRecipeForm extends Component {
 
         console.log(this.state.multerImage)
 
-        axios.post('http://localhost:5000/image/uploadmulter', imageFormObj)
+        axios.post('https://chitterr-app-api.herokuapp.com/image/uploadmulter', imageFormObj)
             .then((data) => {
                 console.log(data.data.Location)
                 this.setState({
@@ -214,7 +202,7 @@ class editRecipeForm extends Component {
         let recipeObjectId = null;
 
         if (!this.props.isEdit) {
-            axios.post('http://localhost:5000/exercises/add', exercise)
+            axios.post('https://chitterr-app-api.herokuapp.com/exercises/add', exercise)
                 .then(res => {
                     console.log(res.data)
 
@@ -228,7 +216,7 @@ class editRecipeForm extends Component {
                         saved: newSaved
                         // saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
                     }
-                    axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)
+                    axios.post('https://chitterr-app-api.herokuapp.com/users/update/' + this.props.currUser._id, userUpdateRecipes)
                         .then(res => {
                             console.log(res.data)
                         });
@@ -245,7 +233,7 @@ class editRecipeForm extends Component {
         }
         else {
             // console.log("updating recipe..." + this.props.match.params.id);
-            axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
+            axios.post('https://chitterr-app-api.herokuapp.com/exercises/update/' + this.props.match.params.id, exercise)
                 .then(response => {console.log("Successful update")})
                 .catch(err => console.log('Error: ' + err))
         }

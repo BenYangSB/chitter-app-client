@@ -18,12 +18,19 @@
 #userProf{
   margin-top: 2vh;
   color: white;
-  background-color: black;
+  background-color: transparent;
+  overflow:scroll;
   text-align: center;
   font-size: 30px;
   flex-wrap: wrap;
   background-repeat: repeat;
 
+}
+
+.followCount{
+  position: absolute;
+  text-align: right;
+  padding: 2%;
 }
 
 
@@ -251,7 +258,7 @@ input {
 
 .myRecipes{
   color: rgb(255, 255, 255);
-  background: url(assets/img71.jpeg);
+  /* background: url(assets/img71.jpeg); */
   background-repeat: repeat;
   background-size: cover;
   height: max-content;

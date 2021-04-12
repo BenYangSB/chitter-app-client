@@ -16,7 +16,7 @@ export default class Trending extends Component {
 
 
   componentDidMount = () => {
-    axios.get('http://localhost:5000/users/' + this.props.match.params.id)
+    axios.get('https://chitterr-app-api.herokuapp.com/users/' + this.props.match.params.id)
       .then(response => {
         if (response.data.length >0 && response.data[0] != undefined) {
           this.setState({
@@ -40,21 +40,23 @@ export default class Trending extends Component {
   }
   render() {
     return (
-      <div class="trendingvids">
+      <div>
 
 
         {this.state.user != null &&
 
 
           <div id="userProf">
-            <div>
-              <p>Followers: {this.state.user.followers}, Following:   {this.state.user.following.length}</p>
-            </div>
+            
+              <p class = "followCount">Followers: {this.state.user.followers}, Following:   {this.state.user.following.length}</p>
+            
             <div>
             </div>{
               this.state.user != null &&
-                <Saved currUser = {this.state.user}></Saved>
-
+                <div>
+                    <Saved currUser = {this.state.user}></Saved>
+                </div>
+                
             }
 
           </div>
