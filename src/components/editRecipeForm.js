@@ -204,8 +204,8 @@ class editRecipeForm extends Component {
             ingredients: temp,
             image: this.state.imgdata,
             instructions: this.state.instructions,
-            totalRatings : this.props.currUser.totalRatings,
-            numRatings : this.props.currUser.numRatings
+            totalRating: 0,
+            numRatings: 0
         }
 
         console.log(exercise);
@@ -214,10 +214,9 @@ class editRecipeForm extends Component {
         let recipeObjectId = null;
 
         if (!this.props.isEdit) {
-            axios.post('http://localhost:5000/exercises/add/', exercise)
+            axios.post('http://localhost:5000/exercises/add', exercise)
                 .then(res => {
                     console.log(res.data)
-                    recipeObjectId = res.data;   // this gives u the object id of the newExercise
 
                     const newSaved = this.props.currUser.saved ? this.props.currUser.saved : [];
                     newSaved.push(recipeObjectId);
@@ -226,12 +225,12 @@ class editRecipeForm extends Component {
                         userKey: this.props.currUser.userKey,
                         following: this.props.currUser.following,
                         followers: this.props.currUser.followers,
-                        saved: newSaved,
+                        saved: newSaved
                         // saved: this.props.currUser.saved == undefined || this.props.currUser.saved == null ? [] : this.props.currUser.saved
                     }
                     axios.post('http://localhost:5000/users/update/' + this.props.currUser._id, userUpdateRecipes)
                         .then(res => {
-                            console.log(res.data + "Successful post!")
+                            console.log(res.data)
                         });
                 });
 
