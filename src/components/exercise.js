@@ -39,9 +39,9 @@ export default class Exercise extends Component {
                         </div>
                     }
 
-                <p className="recipeTime">Time to make : {this.props.exercise.duration} minutes</p>
+                {/* <p className="recipeTime">Time to make : {this.props.exercise.duration} minutes</p>
                 <img src=""></img>
-                <Lst ingList={this.props.exercise.ingredients}></Lst>
+                <Lst ingList={this.props.exercise.ingredients}></Lst> */}
 
                 <br></br>
 
