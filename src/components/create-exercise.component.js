@@ -6,11 +6,18 @@ import ImageUploader from 'react-images-upload';
 import IMGS from './PostPicture'
 import DefaultImg from '../assets/img1.jpeg'
 import EditRecipeForm from './editRecipeForm';
+import firebase from 'firebase';
+import { FirebaseAuth } from 'react-firebaseui';
 
 export default class CreateExercise extends Component {
   constructor(props) {
     super(props);
 
+    let currentUser = firebase.auth().currentUser;
+    this.state = {
+      username : currentUser.displayName,
+      userKey : currentUser.uid
+    }
    
    
 
@@ -30,8 +37,8 @@ export default class CreateExercise extends Component {
           <EditRecipeForm
             isEdit={false}
             currUser={this.props.currUser}
-            username={this.props.username}
-            userKey={this.props.userKey}
+            username={this.state.username}
+            userKey={this.state.userKey}
           />
         </div>
       </div>
