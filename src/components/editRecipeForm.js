@@ -206,6 +206,7 @@ class editRecipeForm extends Component {
                 .then(res => {
                     console.log(res.data)
 
+                    recipeObjectId = res.data;
                     const newSaved = this.props.currUser.saved ? this.props.currUser.saved : [];
                     newSaved.push(recipeObjectId);
                     const userUpdateRecipes = {
