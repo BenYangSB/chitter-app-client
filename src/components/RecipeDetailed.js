@@ -73,6 +73,7 @@ const RecipeDetailed = (props) => {
                     <div className="recipeDetIngredients"><List ingList={recipe.ingredients} /></div>
                     <div className="instructionsTitle">Instructions:</div>
                     <div className="instructions">{recipe.instructions}</div>
+                    {recipe.servings && <div className="servings">{recipe.servings} servings!</div>}
                     {recipe.image != undefined &&
                         <img className="recipeDetImg" alt="Image of Recipe" src={recipe.image} />}
                     {
