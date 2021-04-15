@@ -51,7 +51,7 @@ class editRecipeForm extends Component {
                         date: new Date(response.data.date),
                         imgdata: response.data.image,
                         multerImage: response.data.image,
-                        servings : response.data.servings,
+                        servings : response.data.servings ? response.data.servings : 0,
                         totalRating : response.data.totalRating,
                         numRatings : response.data.numRatings
                     })
@@ -204,7 +204,7 @@ class editRecipeForm extends Component {
             ingredients: temp,
             image: this.state.imgdata,
             instructions: this.state.instructions,
-            servings : this.state.servings,
+            servings : this.state.servings != 0 ? this.state.servings : null,
             totalRating: this.state.totalRating ? this.state.totalRating : 0,
             numRatings: this.state.numRatings ? this.state.numRatings : 0
         }
