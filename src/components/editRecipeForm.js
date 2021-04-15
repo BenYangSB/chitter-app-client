@@ -290,7 +290,7 @@ class editRecipeForm extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Ingredients (separate by commas): </label>
+                        <label>Ingredients (separate by commas with quantity): </label>
                         <input
                             type="text"
                             required

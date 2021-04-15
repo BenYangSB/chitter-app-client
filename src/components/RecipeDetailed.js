@@ -11,6 +11,7 @@ const RecipeDetailed = (props) => {
     const params = useParams(); // used to get the id from the url
     const [recipe, setRecipe] = useState(null);
     const [rating, setRating] = useState(1);
+    const [nutrition, setNutrition] = useState(null);
 
     useEffect(() => {
         console.log(params.id)
@@ -18,6 +19,19 @@ const RecipeDetailed = (props) => {
             .then(response => {
                 console.log(response.data)
                 setRecipe(response.data);
+                const recipeBody = {
+                    "ingredients" : response.data.ingredients,
+                    "description" : response.data.description,
+                    "instructions" : response.data.instructions,
+                    "servings" : response.data.servings    // might be null
+                };
+                console.log(recipeBody);
+                axios.post('http://localhost:5000/nutrition/recipe', recipeBody)
+                    .then(nutriResponse => {
+                        setNutrition(nutriResponse.data)
+                        console.log("Finished API Post Request")
+                    })
+                    .catch(err => console.log("Error: "+err))
             })
             .catch(err => console.log("Error: " + err));
     }, []);
@@ -67,6 +81,10 @@ const RecipeDetailed = (props) => {
                             <Link to={"/edit/" + params.id}>&#9999;</Link> | <Link to='/feed'  onClick={() => { deleteExercise(recipe._id) }}><a href="#">&#128465;</a></Link>
                         </p>
                     }
+                    {nutrition &&
+                        <div>Calories: {nutrition.calories}</div>
+                        && <NutritionCard nutrition={nutrition}/>
+                    }
 
 
 
@@ -92,3 +110,15 @@ const RecipeDetailed = (props) => {
 }
 
 export default RecipeDetailed;
+
+export const NutritionCard = (props) => {
+    return (
+        <div className="nutritionCard">
+            <div className="calories"> Calories: {props.nutrition.calories}</div>
+            <div className="carbs">Carbs: {props.nutrition.totalNutrientsKCal.CHOCDF_KCAL.quantity} cal ({props.nutrition.totalDaily.CHOCDF.quantity} %) {props.nutrition.totalNutrients.CHOCDF.quantity}g</div>
+            <div className="proteins">Protein: {props.nutrition.totalNutrientsKCal.PROCNT_KCAL.quantity} cal ({props.nutrition.totalDaily.PROCNT.quantity} %) {props.nutrition.totalNutrients.PROCNT.quantity}g</div>
+            <div className="fat">Fat: {props.nutrition.totalNutrientsKCal.FAT_KCAL.quantity} cal ({props.nutrition.totalDaily.FAT.quantity} %) {props.nutrition.totalNutrients.FAT.quantity}g</div>
+            <div id="edamam-badge" data-color="white"></div>
+        </div>
+    );
+}
