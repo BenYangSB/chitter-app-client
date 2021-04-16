@@ -53,7 +53,8 @@ class editRecipeForm extends Component {
                         multerImage: response.data.image,
                         servings : response.data.servings ? response.data.servings : 0,
                         totalRating : response.data.totalRating,
-                        numRatings : response.data.numRatings
+                        numRatings : response.data.numRatings,
+                        nutritionEtagAndId : response.data.nutritionEtagAndId
                     })
                 })
                 .catch(function (error) {
@@ -206,7 +207,8 @@ class editRecipeForm extends Component {
             instructions: this.state.instructions,
             servings : this.state.servings != 0 ? this.state.servings : null,
             totalRating: this.state.totalRating ? this.state.totalRating : 0,
-            numRatings: this.state.numRatings ? this.state.numRatings : 0
+            numRatings: this.state.numRatings ? this.state.numRatings : 0,
+            nutritionEtagAndId : this.state.nutritionEtagAndId
         }
 
         console.log(exercise);
