@@ -4,7 +4,7 @@ import { getCurrUserKey } from './localStorageFunctions';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
-
+import Comment from './create-comment';
 
 const RecipeDetailed = (props) => {
 
@@ -91,11 +91,11 @@ const RecipeDetailed = (props) => {
         setRating(nextValue);
     }
 
-    const onButtonClick = () => {
+    const onButtonClick = (rate) => {
         console.log("Posting rating!")
         let updatedRec = recipe;
         updatedRec.numRatings = updatedRec.numRatings == undefined ? 1 : updatedRec.numRatings + 1;
-        updatedRec.totalRating = updatedRec.totalRating == undefined ? 1 : updatedRec.totalRating + rating;
+        updatedRec.totalRating = updatedRec.totalRating == undefined ? 1 : updatedRec.totalRating + rate;
 
         axios.post('https://chitterr-app-api.herokuapp.com/exercises/update/' + recipe._id, updatedRec)
             .then(response => { console.log(response.data) });
@@ -133,24 +133,15 @@ const RecipeDetailed = (props) => {
                     }
 
 
-
-                    <div>
-                        <h2>Your Rating: {rating}</h2>
-                        <StarRatingComponent
-                            name="rate1"
-                            starCount={10}
-                            value={rating}
-                            onStarClick={onStarClick}
-                        />
-
-                        <button onClick={onButtonClick}>Rate!</button>
-                    </div>
                 </div>
             }
 
 
 
             <div className="space"></div>
+            
+            <Comment onButtonClick = {onButtonClick}></Comment>
+            
         </div>
     );
 }

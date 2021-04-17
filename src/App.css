@@ -15,6 +15,22 @@
   }
 } */
 
+#newcomment{
+  width: 70vw;
+  justify-content: center;
+  display: flex;
+  margin:auto;
+  background: url(assets/img2.jpeg);
+  color: white;
+}
+.rateBtn:hover {
+  color: rgb(119, 231, 119);
+}
+.rateBtn{
+  background-color: transparent;
+  font-size: 3vw;
+}
+
 #userProf{
   margin-top: 2vh;
   color: white;
