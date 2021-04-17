@@ -23,6 +23,29 @@
   background: url(assets/img2.jpeg);
   color: white;
 }
+.comment {
+  margin: auto;
+  margin-top : 2vh;
+  width: 70vw;
+  border-radius: 25px;
+  color: var(--text-color);
+  background: url(assets/img2.jpeg);
+  min-height: 10vh;
+}
+.commentText {
+  display: block;
+  margin: auto;
+  width: fit-content;
+  margin-left : 5%;
+}
+.commentPoster {
+  display: block;
+  float : right;
+  width: fit-content;
+  clear: both;
+  margin-right: 5%;
+  margin-top: 1%;
+}
 .rateBtn:hover {
   color: rgb(119, 231, 119);
 }
@@ -80,6 +103,7 @@
 
 :root {
   --btn-background-color: rgb(71, 219, 187);
+  --text-color : white;
 }
 
 body {
