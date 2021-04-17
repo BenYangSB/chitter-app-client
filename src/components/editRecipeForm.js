@@ -27,7 +27,10 @@ class editRecipeForm extends Component {
             multerImage: null,
             imageId: "",
             imgdata: null,
-            recipeId: null
+            recipeId: null,
+            servings: 0,
+            totalRating: 0,
+            numRatings: 0
         }
     }
     componentDidMount() {
@@ -47,7 +50,11 @@ class editRecipeForm extends Component {
                         duration: response.data.duration,
                         date: new Date(response.data.date),
                         imgdata: response.data.image,
-                        multerImage: response.data.image
+                        multerImage: response.data.image,
+                        servings : response.data.servings ? response.data.servings : 0,
+                        totalRating : response.data.totalRating,
+                        numRatings : response.data.numRatings,
+                        nutritionEtagAndId : response.data.nutritionEtagAndId
                     })
                 })
                 .catch(function (error) {
@@ -144,6 +151,12 @@ class editRecipeForm extends Component {
         })
     }
 
+    onChangeServings = (e) => {
+        this.setState({
+            servings : e.target.value
+        })
+    }
+
     onChangeDate = (date) => {
         this.setState({
             date: date
@@ -192,8 +205,10 @@ class editRecipeForm extends Component {
             ingredients: temp,
             image: this.state.imgdata,
             instructions: this.state.instructions,
-            totalRating: 0,
-            numRatings: 0
+            servings : this.state.servings != 0 ? this.state.servings : null,
+            totalRating: this.state.totalRating ? this.state.totalRating : 0,
+            numRatings: this.state.numRatings ? this.state.numRatings : 0,
+            nutritionEtagAndId : this.state.nutritionEtagAndId
         }
 
         console.log(exercise);
@@ -228,6 +243,7 @@ class editRecipeForm extends Component {
                     description: "",
                     duration: 0,
                     instructions: '',
+                    servings: 0,
                     ingredients: [],
                     multerImage: null
                 })
@@ -290,7 +306,7 @@ class editRecipeForm extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Ingredients (separate by commas): </label>
+                        <label>Ingredients (separate by commas with quantity): </label>
                         <input
                             type="text"
                             required
@@ -316,6 +332,15 @@ class editRecipeForm extends Component {
                             className="form-control"
                             value={this.state.duration}
                             onChange={this.onChangeDuration}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Servings (optional): </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.servings}
+                            onChange={this.onChangeServings}
                         />
                     </div>
 
