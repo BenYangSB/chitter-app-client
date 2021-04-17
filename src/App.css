@@ -16,6 +16,7 @@
 } */
 
 #newcomment{
+  padding: 1vw;
   width: 70vw;
   justify-content: center;
   display: flex;
