@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
 import Comment from './create-comment';
+import EdamamAttribution from '../assets/edamamBadge.png';
 
 const RecipeDetailed = (props) => {
 
@@ -38,7 +39,7 @@ const RecipeDetailed = (props) => {
                 else { // send recipe to api, get nutrition data, save that data to the database
                     console.log("looking in api for nutri info")
                     let etag = (response.data.nutritionEtagAndId && response.data.nutritionEtagAndId.etag) ? response.data.nutritionEtagAndId : "none";
-                    axios.post('http://localhost:5000/nutrition/api/recipe', recipeBody, {params : {etag : etag}})
+                    axios.post('http://localhost:5000/nutrition/api/recipe', recipeBody, { params: { etag: etag } })
                         .then(nutriResponse => {
                             if (nutriResponse.alreadyInDatabase) {  // should not happen
                                 axios.get('http://localhost:5000/nutrition/db/recipe/' + nutritionEtagAndId.id)
@@ -64,7 +65,7 @@ const RecipeDetailed = (props) => {
                                     servings: response.data.servings,
                                     totalRating: response.data.totalRating,
                                     numRatings: response.data.numRatings,
-                                    nutritionEtagAndId: {etag : nutriResponse.data.etag, id : nutriResponse.data.id}
+                                    nutritionEtagAndId: { etag: nutriResponse.data.etag, id: nutriResponse.data.id }
                                 }
                                 console.log("Updated recipe nutritionEtagAndId: " + updatedRecipe.nutritionEtagAndId.etag + " | " + updatedRecipe.nutritionEtagAndId.id)
                                 axios.post('http://localhost:5000/exercises/update/' + response.data._id, updatedRecipe)
@@ -121,15 +122,16 @@ const RecipeDetailed = (props) => {
                     {recipe.servings && <div className="servings">{recipe.servings} servings!</div>}
                     {recipe.image != undefined &&
                         <img className="recipeDetImg" alt="Image of Recipe" src={recipe.image} />}
+                    
+                    {nutrition &&
+                        <NutritionCard nutrition={nutrition} />
+                    }
+
                     {
                         (getCurrUserKey() == recipe.userKey && getCurrUserKey() != 'none') &&
                         <p className="editDelete detailedEditDelete">
                             <Link to={"/edit/" + params.id}>&#9999;</Link> | <Link to='/feed' onClick={() => { deleteExercise(recipe._id) }}><a href="#">&#128465;</a></Link>
                         </p>
-                    }
-                    {nutrition &&
-                        <div>Calories: {nutrition.calories}</div>
-                        && <NutritionCard nutrition={nutrition} />
                     }
 
 
@@ -139,9 +141,9 @@ const RecipeDetailed = (props) => {
 
 
             <div className="space"></div>
-            
-            <Comment onButtonClick = {onButtonClick}></Comment>
-            
+
+            <Comment onButtonClick={onButtonClick}></Comment>
+
         </div>
     );
 }
@@ -150,12 +152,50 @@ export default RecipeDetailed;
 
 export const NutritionCard = (props) => {
     return (
+        
         <div className="nutritionCard">
-            <div className="calories"> Calories: {props.nutrition.calories}</div>
-            <div className="carbs">Carbs: {props.nutrition.totalNutrientsKCal.CHOCDF_KCAL.quantity} cal ({props.nutrition.totalDaily.CHOCDF.quantity} %) {props.nutrition.totalNutrients.CHOCDF.quantity}g</div>
-            <div className="proteins">Protein: {props.nutrition.totalNutrientsKCal.PROCNT_KCAL.quantity} cal ({props.nutrition.totalDaily.PROCNT.quantity} %) {props.nutrition.totalNutrients.PROCNT.quantity}g</div>
-            <div className="fat">Fat: {props.nutrition.totalNutrientsKCal.FAT_KCAL.quantity} cal ({props.nutrition.totalDaily.FAT.quantity} %) {props.nutrition.totalNutrients.FAT.quantity}g</div>
-            <div id="edamam-badge" data-color="white"></div>
+            {console.log(props.nutrition)}
+            <div className="nutritionTitle">Nutrition Facts</div>
+            
+            <div className="servings">{props.nutrition.yield} servings</div>
+            <div className="servingSize"><div className="servingSizeTxt">Serving size</div><div className="servingSizeQ">({Math.round(props.nutrition.totalWeight / props.nutrition.yield)}g)</div></div>
+            
+            <div className="thickHorizontalBar"></div>
+
+            <div className="amntPerServing">Amount per serving</div>
+            <div className="caloriesRow">
+                    <div className="caloriesTitle">Calories</div> <div className="caloriesQ">{Math.round(props.nutrition.calories/props.nutrition.yield)}</div>
+            </div>
+
+            <div className="dailyValContainer"><div className="dailyValue">% Daily Value</div></div>
+            <div className="nutritionSubContainer">
+                <div className="totalFat nutritionRow"><div className="miniTitle">Total Fat </div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.FAT.quantity)}g</div><div className="percent">{Math.round(props.nutrition.totalDaily.FAT.quantity)}%</div></div>
+                    <div className="nutritionRow"><div className="indent">Saturated Fat {Math.round(props.nutrition.totalNutrients.FASAT.quantity)}g</div><div className="percent">{Math.round(props.nutrition.totalDaily.FASAT.quantity)}%</div></div>
+                    <div className="nutritionRow"><div className="indent italicize">Trans</div><div className="transFat"> Fat {Math.round(props.nutrition.totalNutrients.FATRN.quantity)}g</div></div>
+                <div className="nutritionRow"><div className="miniTitle">Cholesterol</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.CHOLE.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.CHOLE.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="miniTitle">Sodium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.NA.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.NA.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="miniTitle">Total Carbohydrate</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.CHOCDF.quantity)}g</div> <div className="percent">{Math.round(props.nutrition.totalDaily.CHOCDF.quantity)}%</div></div>
+                    <div className="nutritionRow"><div className="indent">Dietary Fiber {Math.round(props.nutrition.totalNutrients.FIBTG.quantity)}</div><div className="percent">{Math.round(props.nutrition.totalDaily.FIBTG.quantity)}%</div></div>
+                    <div className="nutritionRow"><div className="indent">Total Sugars {Math.round(props.nutrition.totalNutrients.SUGAR.quantity)}</div></div>
+                <div className="nutritionRow"><div className="miniTitle">Protein</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.PROCNT.quantity)}g</div> <div className="percent">{Math.round(props.nutrition.totalDaily.PROCNT.quantity)}%</div></div>
+
+                <div className="thickHorizontalBar"></div>
+                
+                {/*A C D E K Iron Calcium Potassium Magnesium Zinc*/}
+                <div className="nutritionRow"><div className="normalTxt">Vitamin A</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITA_RAE.quantity)}mcg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITA_RAE.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Vitamin C</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITC.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITC.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Vitamin D</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITD.quantity)}mcg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITD.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Vitamin E</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.TOCPHA.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.TOCPHA.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Vitamin K</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITK1.quantity)}mcg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITK1.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Iron</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.FE.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.FE.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Calcium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.CA.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.CA.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Potassium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.K.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.K.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Magnesium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.MG.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.MG.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="normalTxt">Zinc</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.ZN.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.ZN.quantity)}%</div></div>
+
+                
+                <div id="edamamAttributionContainer"><a href="http://developer.edamam.com" target="_blank" id="edamamAttributionLink">Powered By <img id="edamamAttribution" src={EdamamAttribution} /></a></div>
+            </div>
         </div>
     );
 }
