@@ -16,6 +16,10 @@ const RecipeDetailed = (props) => {
 
     useEffect(() => {
         console.log(params.id)
+        getRecipeAndNutritionInfo();
+    }, []);
+
+    const getRecipeAndNutritionInfo = () => {
         axios.get('https://chitterr-app-api.herokuapp.com/exercises/' + params.id)
             .then(response => {
                 console.log(response.data)
@@ -28,7 +32,8 @@ const RecipeDetailed = (props) => {
                 };
                 const nutritionEtagAndId = response.data.nutritionEtagAndId // might be null
                 console.log(recipeBody);
-                if (nutritionEtagAndId && nutritionEtagAndId.etag && nutritionEtagAndId.id) {  // already have nutrition data in database
+                // already have nutrition data in database, so look in database
+                if (nutritionEtagAndId && nutritionEtagAndId.etag && nutritionEtagAndId.id) {
                     console.log("looking in database for nutrition")
                     axios.get('http://localhost:5000/nutrition/db/recipe/' + nutritionEtagAndId.id)
                         .then(nutriResponse => {
@@ -41,7 +46,7 @@ const RecipeDetailed = (props) => {
                     let etag = (response.data.nutritionEtagAndId && response.data.nutritionEtagAndId.etag) ? response.data.nutritionEtagAndId : "none";
                     axios.post('http://localhost:5000/nutrition/api/recipe', recipeBody, { params: { etag: etag } })
                         .then(nutriResponse => {
-                            if (nutriResponse.alreadyInDatabase) {  // should not happen
+                            if (nutriResponse.data.alreadyInDatabase) {  // should not happen
                                 axios.get('http://localhost:5000/nutrition/db/recipe/' + nutritionEtagAndId.id)
                                     .then(nutriResponse => {
                                         setNutrition(nutriResponse.data);
@@ -49,43 +54,77 @@ const RecipeDetailed = (props) => {
                                     })
                                     .catch(err => console.log(err))
                             }
+                            else if (nutriResponse.data.recipeQualityTooLow) {
+                                recipeBody.servings = null;
+                                console.log("2?")
+                                axios.post('http://localhost:5000/nutrition/api/recipe', recipeBody, { params: { etag: etag } })
+                                    .then(nutriResponse2 => {
+                                        if (!nutriResponse2.alreadyInDatabase && !nutriResponse2.recipeQualityTooLow && nutriResponse.data.etag) {
+                                            setNutrition(nutriResponse2.data);
+                                            // console.log("2: " + nutriResponse2.data);
+                                            saveNutriDataToDB(nutriResponse2, response.data);
+                                        }
+                                        else if (nutriResponse2.data.recipeQualityTooLow && response.data.ingredients.length == 1) {
+                                            console.log("3?");
+                                            axios.get('http://localhost:5000/nutrition/api/item', { params: { ingredients: response.data.ingredients[0], etag: etag } })
+                                                .then(nutriResponse3 => {
+                                                    if (!nutriResponse3.alreadyInDatabase && !nutriResponse3.recipeQualityTooLow) {
+                                                        nutriResponse3.data.yield = 1;
+                                                        setNutrition(nutriResponse3.data);
+                                                        console.log("3: " + nutriResponse3.data);
+                                                        saveNutriDataToDB(nutriResponse3, response.data);
+                                                    }
+                                                })
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log("error: " + err);
+                                    })
+                            }
                             else {
                                 setNutrition(nutriResponse.data);
                                 console.log("got nutri data from api")
                                 // add etag to exercise
-                                const updatedRecipe = {
-                                    username: response.data.username,
-                                    userKey: response.data.userKey,
-                                    description: response.data.description,
-                                    duration: response.data.duration,
-                                    date: response.data.date,
-                                    ingredients: response.data.ingredients,
-                                    image: response.data.image,
-                                    instructions: response.data.instructions,
-                                    servings: response.data.servings,
-                                    totalRating: response.data.totalRating,
-                                    numRatings: response.data.numRatings,
-                                    nutritionEtagAndId: { etag: nutriResponse.data.etag, id: nutriResponse.data.id }
-                                }
-                                console.log("Updated recipe nutritionEtagAndId: " + updatedRecipe.nutritionEtagAndId.etag + " | " + updatedRecipe.nutritionEtagAndId.id)
-                                axios.post('http://localhost:5000/exercises/update/' + response.data._id, updatedRecipe)
-                                    .then(response => { console.log("Successful update to db of nutri data") })
-                                    .catch(err => console.log('Error: ' + err))
+                                console.log("1: " + nutriResponse.data);
+                                saveNutriDataToDB(nutriResponse, response.data);
                             }
 
-                            console.log("Finished API Post Request")
+                            // console.log("Finished API Post Request")
                         })
                         .catch(err => console.log("Error: " + err))
                 }
 
             })
             .catch(err => console.log("Error: " + err));
-    }, []);
+    }
+
+    const saveNutriDataToDB = (nutriResponse, recipeData) => {
+        const updatedRecipe = {
+            username: recipeData.username,
+            userKey: recipeData.userKey,
+            description: recipeData.description,
+            duration: recipeData.duration,
+            date: recipeData.date,
+            ingredients: recipeData.ingredients,
+            image: recipeData.image,
+            instructions: recipeData.instructions,
+            servings: recipeData.servings,
+            totalRating: recipeData.totalRating,
+            numRatings: recipeData.numRatings,
+            nutritionEtagAndId: { etag: nutriResponse.data.etag, id: nutriResponse.data.id }
+        }
+        console.log("Updated recipe nutritionEtagAndId: " + updatedRecipe.nutritionEtagAndId.etag + " | " + updatedRecipe.nutritionEtagAndId.id)
+        axios.post('http://localhost:5000/exercises/update/' + recipeData._id, updatedRecipe)
+            .then(response => { console.log("Successful update to db of nutri data") })
+            .catch(err => console.log('Error: ' + err))
+    }
 
     const deleteExercise = (id) => {
         axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
             .then(response => { console.log(response.data) });
     };
+    // 607e18d1307c5e07a81d7367
+    // urn:rsg2:G3Cm4RfX5N8U2qNb790y:46505933363eb38ee189a242043f1c29
 
     const onStarClick = (nextValue, prevValue, name) => {
         console.log("HERE");
@@ -122,7 +161,7 @@ const RecipeDetailed = (props) => {
                     {recipe.servings && <div className="servings">{recipe.servings} servings!</div>}
                     {recipe.image != undefined &&
                         <img className="recipeDetImg" alt="Image of Recipe" src={recipe.image} />}
-                    
+
                     {nutrition &&
                         <NutritionCard nutrition={nutrition} />
                     }
@@ -151,36 +190,37 @@ const RecipeDetailed = (props) => {
 export default RecipeDetailed;
 
 export const NutritionCard = (props) => {
+
     return (
-        
+
         <div className="nutritionCard">
             {console.log(props.nutrition)}
             <div className="nutritionTitle">Nutrition Facts</div>
-            
-            <div className="servings">{props.nutrition.yield} servings</div>
+
+            <div className="servings">{props.nutrition.yield ? props.nutrition.yield : 1} servings</div>
             <div className="servingSize"><div className="servingSizeTxt">Serving size</div><div className="servingSizeQ">({Math.round(props.nutrition.totalWeight / props.nutrition.yield)}g)</div></div>
-            
+
             <div className="thickHorizontalBar"></div>
 
             <div className="amntPerServing">Amount per serving</div>
             <div className="caloriesRow">
-                    <div className="caloriesTitle">Calories</div> <div className="caloriesQ">{Math.round(props.nutrition.calories/props.nutrition.yield)}</div>
+                <div className="caloriesTitle">Calories</div> <div className="caloriesQ">{Math.round(props.nutrition.calories / props.nutrition.yield)}</div>
             </div>
 
             <div className="dailyValContainer"><div className="dailyValue">% Daily Value</div></div>
             <div className="nutritionSubContainer">
                 <div className="totalFat nutritionRow"><div className="miniTitle">Total Fat </div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.FAT.quantity)}g</div><div className="percent">{Math.round(props.nutrition.totalDaily.FAT.quantity)}%</div></div>
-                    <div className="nutritionRow"><div className="indent">Saturated Fat {Math.round(props.nutrition.totalNutrients.FASAT.quantity)}g</div><div className="percent">{Math.round(props.nutrition.totalDaily.FASAT.quantity)}%</div></div>
-                    <div className="nutritionRow"><div className="indent italicize">Trans</div><div className="transFat"> Fat {Math.round(props.nutrition.totalNutrients.FATRN.quantity)}g</div></div>
+                <div className="nutritionRow"><div className="indent">Saturated Fat {Math.round(props.nutrition.totalNutrients.FASAT.quantity)}g</div><div className="percent">{props.nutrition.totalDaily.FASAT ? Math.round(props.nutrition.totalDaily.FASAT.quantity) : 0}%</div></div>
+                <div className="nutritionRow"><div className="indent italicize">Trans</div><div className="transFat"> Fat {props.nutrition.totalNutrients.FATRN ? Math.round(props.nutrition.totalNutrients.FATRN.quantity) : 0}g</div></div>
                 <div className="nutritionRow"><div className="miniTitle">Cholesterol</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.CHOLE.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.CHOLE.quantity)}%</div></div>
                 <div className="nutritionRow"><div className="miniTitle">Sodium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.NA.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.NA.quantity)}%</div></div>
                 <div className="nutritionRow"><div className="miniTitle">Total Carbohydrate</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.CHOCDF.quantity)}g</div> <div className="percent">{Math.round(props.nutrition.totalDaily.CHOCDF.quantity)}%</div></div>
-                    <div className="nutritionRow"><div className="indent">Dietary Fiber {Math.round(props.nutrition.totalNutrients.FIBTG.quantity)}</div><div className="percent">{Math.round(props.nutrition.totalDaily.FIBTG.quantity)}%</div></div>
-                    <div className="nutritionRow"><div className="indent">Total Sugars {Math.round(props.nutrition.totalNutrients.SUGAR.quantity)}</div></div>
+                <div className="nutritionRow"><div className="indent">Dietary Fiber {Math.round(props.nutrition.totalNutrients.FIBTG.quantity)}</div><div className="percent">{Math.round(props.nutrition.totalDaily.FIBTG.quantity)}%</div></div>
+                <div className="nutritionRow"><div className="indent">Total Sugars {Math.round(props.nutrition.totalNutrients.SUGAR.quantity)}</div></div>
                 <div className="nutritionRow"><div className="miniTitle">Protein</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.PROCNT.quantity)}g</div> <div className="percent">{Math.round(props.nutrition.totalDaily.PROCNT.quantity)}%</div></div>
 
                 <div className="thickHorizontalBar"></div>
-                
+
                 {/*A C D E K Iron Calcium Potassium Magnesium Zinc*/}
                 <div className="nutritionRow"><div className="normalTxt">Vitamin A</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITA_RAE.quantity)}mcg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITA_RAE.quantity)}%</div></div>
                 <div className="nutritionRow"><div className="normalTxt">Vitamin C</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.VITC.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.VITC.quantity)}%</div></div>
@@ -193,7 +233,7 @@ export const NutritionCard = (props) => {
                 <div className="nutritionRow"><div className="normalTxt">Magnesium</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.MG.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.MG.quantity)}%</div></div>
                 <div className="nutritionRow"><div className="normalTxt">Zinc</div> <div className="quantity">{Math.round(props.nutrition.totalNutrients.ZN.quantity)}mg</div> <div className="percent">{Math.round(props.nutrition.totalDaily.ZN.quantity)}%</div></div>
 
-                
+
                 <div id="edamamAttributionContainer"><a href="http://developer.edamam.com" target="_blank" id="edamamAttributionLink">Powered By <img id="edamamAttribution" src={EdamamAttribution} /></a></div>
             </div>
         </div>
