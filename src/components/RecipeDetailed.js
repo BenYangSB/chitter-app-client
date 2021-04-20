@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
 import Comment from './create-comment';
 import EdamamAttribution from '../assets/edamamBadge.png';
+import { set } from 'mongoose';
 
 const RecipeDetailed = (props) => {
 
@@ -56,21 +57,20 @@ const RecipeDetailed = (props) => {
                             }
                             else if (nutriResponse.data.recipeQualityTooLow) {
                                 recipeBody.servings = null;
-                                console.log("2?")
+                                // console.log("2?")
                                 axios.post('http://localhost:5000/nutrition/api/recipe', recipeBody, { params: { etag: etag } })
                                     .then(nutriResponse2 => {
                                         if (!nutriResponse2.alreadyInDatabase && !nutriResponse2.recipeQualityTooLow && nutriResponse.data.etag) {
                                             setNutrition(nutriResponse2.data);
-                                            // console.log("2: " + nutriResponse2.data);
+                                            console.log("2: " + nutriResponse2.data);
                                             saveNutriDataToDB(nutriResponse2, response.data);
                                         }
                                         else if (nutriResponse2.data.recipeQualityTooLow && (response.data.ingredients.length == 1 || response.data.ingredients.length == 2)) {
-                                            console.log("3?");
-                                            let ingredients = ingredients.join(" AND ");
+                                            // console.log("3?");
+                                            let ingredients = response.data.ingredients.join(" AND ");
                                             axios.get('http://localhost:5000/nutrition/api/item', { params: { ingredients: response.data.ingredients[0], etag: etag } })
                                                 .then(nutriResponse3 => {
                                                     if (!nutriResponse3.alreadyInDatabase && !nutriResponse3.recipeQualityTooLow) {
-                                                        nutriResponse3.data.yield = 1;
                                                         setNutrition(nutriResponse3.data);
                                                         console.log("3: " + nutriResponse3.data);
                                                         saveNutriDataToDB(nutriResponse3, response.data);
@@ -192,24 +192,11 @@ export default RecipeDetailed;
 
 export const NutritionCard = (props) => {
     const [nutrition, setNutrition] = useState(props.nutrition);
-    useEffect(()=> {
-        // doesn't work for soem reason
-        // if (!nutrition.hasOwnProperty('yield') || nutrition.yield === undefined || nutrition.yield === null) {
-        //     let newNutrition = nutrition;
-        //     newNutrition.yield = 1;
-        //     setNutrition(newNutrition);
-        // }
-        if (nutrition.yield) {}
-        else {
-            let newNutrition = nutrition;
-            newNutrition.yield = 1;
-            setNutrition(newNutrition);
-        }
-    },[])
 
     return (
 
         <div className="nutritionCard">
+            {console.log("nutrition is: " + typeof(nutrition.yield) + nutrition.yield)}
             {console.log(nutrition)}
             <div className="nutritionTitle">Nutrition Facts</div>
 
@@ -249,6 +236,10 @@ export const NutritionCard = (props) => {
                 <div className="nutritionRow"><div className="normalTxt">Magnesium</div> <div className="quantity">{Math.round(nutrition.totalNutrients.MG.quantity)}mg</div> <div className="percent">{Math.round(nutrition.totalDaily.MG.quantity)}%</div></div>
                 <div className="nutritionRow"><div className="normalTxt">Zinc</div> <div className="quantity">{Math.round(nutrition.totalNutrients.ZN.quantity)}mg</div> <div className="percent">{Math.round(nutrition.totalDaily.ZN.quantity)}%</div></div>
 
+                <div className="nutritionRow" id="nutriFootnote">
+                    <div id="asterik">*</div>
+                    <div id="footnoteTxt">The Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.</div>
+                </div>
 
                 <div id="edamamAttributionContainer"><a href="http://developer.edamam.com" target="_blank" id="edamamAttributionLink">Powered By <img id="edamamAttribution" src={EdamamAttribution} /></a></div>
             </div>

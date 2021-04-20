@@ -518,9 +518,9 @@ input {
 }
 .nutritionRow {
   font-size: 1.5rem;
-  border-color: black;
-  border-bottom-style: solid;
-  border-width: 1.5px;
+  border-bottom: 1.5px solid black;
+  /* border-bottom-style: solid;
+  border-width: 1.5px; */
 }
 .miniTitle {
   display : inline;
@@ -547,7 +547,20 @@ input {
   display: inline;
   float: right;
 }
+#nutriFootnote {
+  border-top: 1.5vh solid black;
+  font-size : 1.25rem;
+  display: grid;
+  grid-template-columns: 1% 99%;
+}
+#asterik {
+  display: grid;
+  width: fit-content;
+}
+#footnoteTxt {
+  display: grid;
 
+}
 
 #edamamAttributionContainer {
   display: flex;
