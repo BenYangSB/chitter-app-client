@@ -53,7 +53,7 @@ class MyRecipies extends Component {
     };
 
     deleteExercise = (id) => {
-        axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
+        axios.delete('http://localhost:5000/exercises/' + id)
             .then(response => { console.log(response.data) });
 
         this.setState({

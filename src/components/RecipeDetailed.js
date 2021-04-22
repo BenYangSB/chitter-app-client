@@ -121,7 +121,7 @@ const RecipeDetailed = (props) => {
     }
 
     const deleteExercise = (id) => {
-        axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
+        axios.delete('http://localhost:5000/exercises/' + id)
             .then(response => { console.log(response.data) });
     };
     // 607e18d1307c5e07a81d7367
