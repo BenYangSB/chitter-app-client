@@ -154,7 +154,7 @@ export default class ExercisesList extends Component {
   }
 
   deleteExercise(id) {
-    axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
+    axios.delete('http://localhost:5000/exercises/' + id)
       .then(response => {
         this.readFollowersPosts();
         this.setState({

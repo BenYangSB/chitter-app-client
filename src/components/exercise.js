@@ -29,7 +29,7 @@ export default class Exercise extends Component {
             
             <div className="card" id="recipe">
 
-                {console.log(this.props.exercise.numRatings)}
+                {/* {console.log(this.props.exercise.numRatings)} */}
                 <h className="recipePoster">{this.props.exercise.username}</h>
                 <h className="recipeTitle">{this.props.exercise.description}</h>
 

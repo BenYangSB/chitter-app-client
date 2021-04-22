@@ -13,7 +13,7 @@ class Saved extends Component {
             savedRecipes: [],
             displayedRecipes: [],
             currUser: this.props.currUser,
-            loading : true
+            loading: true
         }
     }
 
@@ -29,7 +29,7 @@ class Saved extends Component {
                     if (response && response.data && response.data.length > 0) {
                         this.setState({
                             savedRecipes: response.data[0].saved,
-                            currUser : response.data[0]
+                            currUser: response.data[0]
                         })
 
                         this.state.savedRecipes.map((recipeId) => {
@@ -37,12 +37,13 @@ class Saved extends Component {
                                 .then(response => {
                                     let temp = this.state.displayedRecipes;
 
-                                    temp.push(response.data)
-                                    this.setState({
-                                        displayedRecipes: temp
-                                    })
-                                    setTimeout(() => {this.setState({loading : false})}, 100);
-                                    // console.log(this.state.displayedRecipes)
+                                    if (response.data) {
+                                        temp.push(response.data)
+                                        this.setState({
+                                            displayedRecipes: temp
+                                        })
+                                        setTimeout(() => { this.setState({ loading: false }) }, 100);
+                                    }
                                 })
                                 .catch((error) => {
                                     console.log(error);
@@ -75,11 +76,11 @@ class Saved extends Component {
     };
 
     deleteExercise = (id) => {
-        axios.delete('https://chitterr-app-api.herokuapp.com/exercises/' + id)
-            .then(response => { 
+        axios.delete('http://localhost:5000/exercises/' + id)
+            .then(response => {
                 console.log(response.data)
                 // this.updateCurrUser();
-                this.reReadEverythingFromDatabase(); 
+                this.reReadEverythingFromDatabase();
             });
 
         this.setState({
@@ -101,10 +102,10 @@ class Saved extends Component {
             <div className="myRecipes">
                 <div className="feed-title">Saved Recipes</div>
                 {
-                    console.log(this.state.displayedRecipes)
+                    // console.log(this.state.displayedRecipes)
                 }
                 <div className="feed-total">
-                    {this.state.loading && <img className="loadingBar" src={BlueLoadingBar}/>}
+                    {this.state.loading && <img className="loadingBar" src={BlueLoadingBar} />}
                     {!this.state.loading && this.state.displayedRecipes.length == 0 &&
                         <div className="emptyMsg">No saved posts yet!</div>
                     }
